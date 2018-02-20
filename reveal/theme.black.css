@@ -44,6 +44,18 @@
     color: #a2fca2;
 }
 
+.black .reveal .slides .magenta,
+.black .reveal .slides .magenta *
+{
+    color: #b963d3;
+}
+
+.black .cli code
+{
+    border-left: 5px solid #343434 !important;
+    background: #232323 !important
+}
+
 /* Modified Agate highlightjs theme */
 .black .hljs
 {

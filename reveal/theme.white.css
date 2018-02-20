@@ -54,6 +54,18 @@
     color: #63a35c;
 }
 
+.white .reveal .slides .magenta,
+.white .reveal .slides .magenta *
+{
+    color: #9b58af;
+}
+
+.white .cli code
+{
+    border-left: 5px solid #dedede !important;
+    background: #efefef !important
+}
+
 /* Modified Github highlightjs theme */
 .white .hljs {
   display: block;
