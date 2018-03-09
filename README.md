@@ -14,6 +14,7 @@
 1. ServiceWorker ([слайды](https://yadi.sk/i/P9k4yIvJ3U6Jj3))
 1. PostgreSQL ([слайды](http://urfu-2017.github.io/webdev-slides/14-postgresql/lection/index.html))
 1. Производительный NodeJS ([слайды](http://urfu-2017.github.io/webdev-slides/16-node-pro/index.html))
+1. Storage APIs (Cookies, LocalStorage, IndexedDB) ([слайды](http://urfu-2017.github.io/webdev-slides/19-storage/index.html), [pdf](19-storage/index.pdf))
 
 ## Хакатоны
 
