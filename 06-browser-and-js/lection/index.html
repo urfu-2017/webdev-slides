@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Браузер и JS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../css/reveal.css">
+    <link rel="stylesheet" href="../css/theme/yandex.css" id="theme">
+    <link rel="stylesheet" href="../lib/css/zenburn.css">
+    <link rel="stylesheet" href="./css/user.css">
+</head>
+<body class="yandex nodejs"><div class="reveal"><div class="slides">
+
+<section class="large">
+    <h3>Браузер и JS</h3>
+    <p class="author">
+        <small>Олег Мохов</small>
+    </p>
+</section>
+
+
+<section>
+    <section>
+        <blockquote>Из этой лекции можно сделать отдельный курс, а мы пробежим по верхам, т.к есть реакт</blockquote>
+    </section>
+    <section>
+        <blockquote>Это не значит что всё эти знания вам не пригодятся</blockquote>
+    </section>
+    <section>
+        <h4>
+            <a href="https://learn.javascript.ru/">Learn JavaScript. Часть 2</a>
+        </h4>
+    </section>
+</section>
+    
+<section>
+    <section>
+        <h3>Браузер</h3>
+        <ul>
+            <li class="fragment">JavaScript</li>
+            <li class="fragment">Глобальный объект window</li>
+            <li class="fragment">Document Object Model</li>
+            <li class="fragment">Browser Object Model</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Проблемы JavaScript в браузере?</h3>
+        <ul>
+            <li class="fragment">Мы не можем выбирать браузер пользователя</li>
+            <li class="fragment">Мы не можем выбирать версию браузера пользователя</li>
+            <li class="fragment">Мы не можем менять настройки пользователя</li>
+        </ul>
+    </section>
+    <section>
+        <h3>window</h3>
+        <ul>
+            <li>Содержит свойства и методы для управления окном браузера, открытия новых окон</li>
+            <li onclick="window.open('http://urfu.ru')">window.open('http://urfu.ru')</li>
+        </ul>
+    </section>
+    <section>
+        <h3>BOM</h3>
+        <ul>
+            <li>Объект navigator: navigator.userAgent, navigator.platform</li>
+            <li>Объект location: текущий урл и разные перенаправления</li>
+            <li>Функции alert/prompt/confirm</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h3>DOM</h3>
+    </section>
+    <section>
+        <img src="img/how-html-parser-works.png" alt="">
+    </section>
+    <section>
+        <h3>Типы узлов</h3>
+        <ul>
+            <li class="fragment">В DOM 12 типов узлов, но мы работаем с 4</li>
+            <li class="fragment">Документ – объект document</li>
+            <li class="fragment">Элементы – теги</li>
+            <li class="fragment">Текст</li>
+            <li class="fragment">Комментарии – в них можно включить информацию, которая будет доступна из JS</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Навигация по узлам</h3>
+        <input type="hidden" class="fragment navigation-by-nodes"/>
+        <style>
+            .navigation-by-nodes ~ img {
+                transition: 0.3s ease-out margin;
+            }
+            .navigation-by-nodes.visible ~ img {
+                margin-top: -300px;
+            }
+        </style>
+        <img src="img/dom-links@2x.png" alt="">
+    </section>
+    <section>
+        <pre><code class="hljs html size-XS" data-trim data-noescape>
+&lt;div&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+    </section>
+    <section>
+        <h3>null</h3>
+        <ul>
+            <li class="fragment">Если узла нет или узел не найден, то это null</li>
+            <li class="fragment">document есть всегда, document.body может быть равен null</li>
+        </ul>
+    </section>
+    <section>
+        <h3>childNodes – это коллекция, а не массив</h3>
+    </section>
+    <section>
+        <h3>Навигация по узлам</h3>
+        <img style="margin-top: -300px" src="img/dom-links-elements@2x.png" alt="">
+    </section>
+</section>
+<section>
+    <section>
+        <h3>Поиск элементов</h3>
+    </section>
+    <section>
+        <h4>document.getElementById('id')</h4>
+        <ul>
+            <li class="fragment">Ищет элемент с заданным идентификатором</li>
+            <li class="fragment">Возращает первый найденный элемент</li>
+        </ul>
+    </section>
+    <section>
+        <h3>getElementsByClassName(class)</h3>
+        <ul>
+            <li class="fragment">Есть не только у document, но и у любого элемента</li>
+            <li class="fragment">Ищет элементы с соответствующим классом</li>
+            <li class="fragment">Возращает коллекцию</li>
+            <li class="fragment"><pre class="size-xxxs">document.getElementsByClassName('class class2')</pre> не вернет <pre class="size-xxxs">&lt;div class="class class2"&gt;</pre></li>
+        </ul>
+    </section>
+    <section>
+        <h3>getElementsByTagName('tag')</h3>
+        <ul>
+            <li class="fragment">Есть не только у document, но и у любого элемента</li>
+            <li class="fragment">Ищет элементы соответствующего тега</li>
+            <li class="fragment">Возращает коллекцию</li>
+        </ul>
+    </section>
+    <section>
+        <h3>jQuery</h3>
+    </section>
+    <section>
+        <h3>querySelectorAll(selector)</h3>
+        <ul>
+            <li class="fragment">Возвращает коллекцию по заданному CSS селектору</li>
+            <li class="fragment">Псевдоселекторы тоже работают, т.е :hover вернет всё дерево элементов на которые мы навелись</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Пример</h3>
+        <pre class="fragment"><code class="html javascript size-XXS" data-trim>
+<div>
+    <ul class="menu">
+        <li class="item1"></li>
+        <li class="item2"></li>
+    </ul>
+</div>
+<div>
+    <ul>
+        <li></li>
+    </ul>
+</div>
+</code></pre>
+        <pre class="fragment"><code class="hljs javascript size-XS" data-trim>
+var menu = document.querySelectorAll('.menu')[0];
+var listItems = menu.querySelectorAll('li');
+</code></pre>
+    </section>
+    <section>
+        <h3>querySelector(selector)</h3>
+        <ul>
+            <li class="fragment">Возвращает первый найденный элемент по заданному селектору</li>
+            <li class="fragment"><pre class="size-xxxs">document.querySelector('.class.class2')</pre> вернет <pre class="size-xxxs">&lt;div class="class class2"&gt;</pre></li>
+        </ul>
+    </section>
+    <section>
+        <h3>matches(selector)</h3>
+        <ul>
+            <li class="fragment">Проверяет соответствует ли текущий элемент селектору</li>
+            <li class="fragment">Возвращает true или false</li>
+        </ul>
+    </section>
+    <section>
+        <h3>closest(selector)</h3>
+        <ul>
+            <li class="fragment">Ищет ближайший элемент, соответствующий селектору вверх по DOM-дереву относительно текущего</li>
+        </ul>
+    </section>
+    <section>
+        <h3><a href="https://learn.javascript.ru/searching-elements-internals">Внутреннее устройство поисковых методов</a></h3>
+    </section>
+</section>
+<section>
+    <section>
+        <h3>Свойства узлов</h3>
+    </section>
+
+    <section>
+        <img src="img/hierarchy.png" alt="">
+    </section>
+
+    <section>
+        <h3>node.nodeType</h3>
+        <ul>
+            <li class="fragment">Тип узла</li>
+            <li class="fragment">Это число</li>
+            <li class="fragment">Всего 12<span class="fragment">, но пользуемся 2</span> <span class="fragment">(<a href="https://learn.javascript.ru/basic-dom-node-properties#%D1%82%D0%B8%D0%BF-nodetype">Остальные</a>)</span></li>
+            <li class="fragment">1 – ELEMENT_NODE</li>
+            <li class="fragment">3 – TEXT_NODE</li>
+        </ul>
+    </section>
+    <section>
+        <h3>node.nodeName и node.tagName</h3>
+        <ul>
+            <li class="fragment">Оба свойства содержат имя тега</li>
+            <li class="fragment">nodeName вернет имя тега ближайшего ELEMENT_NODE родителя для TEXT_NODE</li>
+        </ul>
+    </section>
+    <section>
+        <h3>innerHTML</h3>
+        <ul>
+            <li class="fragment">Содержит содержимое элемента в виде строки</li>
+            <li class="fragment">innerHTML += осуществляет перезапись</li>
+            <li class="fragment">Скрипты не выполняются</li>
+        </ul>
+    </section>
+    <section>
+        <h3>outerHTML</h3>
+        <ul>
+            <li class="fragment">Содержит HTML элемента целиком</li>
+            <li class="fragment">Доступно на запись, но в результате получается новый элемент</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Пример</h3>
+        <pre class="fragment"><code class="hljs javascript size-XS" data-trim data-noescape>
+var div = document.querySelector('div');
+console.log(div); // &lt;div&gt;Привет&lt;/div&gt;
+<span class="fragment">div.innerHTML = 'Hi!'
+console.log(div); // &lt;div&gt;Hi!&lt;/div&gt;</span>
+<span class="fragment">div.outerHTML = '&lt;div&gt;Здарова&lt;/div&gt;'
+console.log(div)</span><span class="fragment"> // &lt;div&gt;Hi!&lt;/div&gt;</span>
+</code></pre>
+    </section>
+    <section>
+        <h3>textContent</h3>
+        <ul>
+            <li class="fragment">Содержит только текст внутри элемента, за вычетом всех &lt;тегов&gt;</li>
+        </ul>
+    </section>
+    <section>
+        <h3>hidden</h3>
+        <ul>
+            <li class="fragment">Виден ли элемент</li>
+            <li class="fragment">Работает как для CSS, так и для соответствующего атрибута</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Атрибуты</h3>
+        <ul>
+            <li class="fragment">element.[get/has/set/remove]Attribute</li>
+            <li class="fragment">attributes – коллекция всех атрибутов элемента</li>
+        </ul>
+    </section>
+    <section>
+        <h3>Классы</h3>
+        <ul>
+            <li class="fragment">className – в виде строки</li>
+            <li class="fragment">classList – объект для работы с классами</li>
+            <li class="fragment">classList.[add/remove/toggle] – добавить/удалить класс</li>
+            <li class="fragment">classList.contains – есть ли класс</li>
+        </ul>
+    </section>
+    <section>
+        <h3>data-*</h3>
+        <ul>
+            <li class="fragment">Все data-* атрибуты доступны в объекте dataset</li>
+            <li class="fragment">data-user-location будет доступно в element.dataset.userLocation</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h3>Добавление и удаление узлов</h3>
+    </section>
+    <section>
+        <h4>document.createElement</h4>
+        <pre><code class="hljs javascript size-XS" data-trim>
+var div = document.createElement('div');
+div.className = "alert alert-success";
+div.innerHTML = "<strong>Ура</strong>!";
+</code></pre>
+    </section>
+    <section>
+        <h4>appendChild</h4>
+        <pre><code class="hljs html size-XS" data-trim>
+<ol id="list">
+  <li>0</li>
+  <li>1</li>
+  <li>2</li>
+</ol>
+
+&lt;script&gt;
+  var newLi = document.createElement('li');
+  newLi.innerHTML = '3';
+  // newLi.appendChild(document.createTextNode('3'))
+
+  list.appendChild(newLi);
+&lt;/script&gt;
+</code></pre>
+    </section>
+    <section>
+        <h4>insertBefore</h4>
+        <pre><code class="hljs html size-XS" data-trim>
+<ol id="list">
+  <li>0</li>
+  <li>1</li>
+  <li>2</li>
+</ol>
+&lt;script&gt;
+  var newLi = document.createElement('li');
+  newLi.innerHTML = '0.5';
+
+  list.insertBefore(newLi, list.children[1]);
+&lt;/script&gt;
+</code></pre>
+    </section>
+    <section>
+        <h3>Удаление</h3>
+        <ul>
+            <li class="fragment">parentElem.removeChild(elem) – удаляет elem из детей parentElem</li>
+            <li class="fragment">elem.remove() – то же самое, но не поддерживается IE11-</li>
+            <li class="fragment">parentElem.replaceChild(newElem, elem) – удаляет elem из детей parentElem и вставляет на его место newElem</li>
+            <li class="fragment">classList.contains – есть ли класс</li>
+        </ul>
+    </section>
+    <section>
+        <h3>elem.cloneNode</h3>
+        <ul>
+            <li class="fragment">Создаёт копию текущего элемента</li>
+            <li class="fragment">Если в качестве аргумента передать true, то создаст глубокую копию элемента, включая атрибуты и подэлементы</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h3>События</h3>
+    </section>
+
+    <section>
+        <h3>События мыши</h3>
+        <ul>
+            <li class="fragment">click – происходит, когда кликнули на элемент левой кнопкой мыши</li>
+            <li class="fragment">contextmenu – происходит, когда кликнули на элемент правой кнопкой мыши</li>
+            <li class="fragment">mouseover – возникает, когда на элемент наводится мышь</li>
+            <li class="fragment">mousedown и mouseup – когда кнопку мыши нажали (down) или отжали (up)</li>
+            <li class="fragment">mousemove – при движении мыши над элементом</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>События пальцев</h3>
+        <ul>
+            <li class="fragment">touchstart – происходит, когда элемента коснулись</li>
+            <li class="fragment">touchmove – происходит, когда по элементу провели пальцем</li>
+            <li class="fragment">touchend – возникает, когда касание закончилось и палец убрали</li>
+            <li class="fragment">touchcancel – палец переместился на интерфейс браузера или тач-событие нужно отменить</li>
+        </ul>
+    </section>
+
+    <section>
+        <h3>Ещё события</h3>
+        <ul>
+            <li class="fragment">submit – отправка формы</li>
+            <li class="fragment">focus – фокус на элементе</li>
+            <li class="fragment">keyup/keydown – печать на клавиатуре</li>
+            <li class="fragment">DOMContentLoaded</li>
+            <li class="fragment">transitionend – закончена CSS-анимация</li>
+        </ul>
+        <p class="fragment"><a href="https://developer.mozilla.org/ru/docs/Web/Events">Ещё больше событий</a></p>
+    </section>
+
+    <section>
+        <h3>Назначение обработчика событий</h3>
+        <pre class="fragment"><code class="hljs html size-XS" data-trim>
+<li onclick="alert('привет');">Щелкни меня</li>
+</code></pre>
+        <br>
+        <pre class="fragment"><code class="hljs javascript size-XS" data-trim>
+var li = document.getElementByTagName('li')[0];
+li.onclick = function () { alert('привет'); }
+</code></pre>
+        <br>
+        <pre class="fragment"><code class="hljs javascript size-XS" data-trim>
+li.addEventListener('click', () => {
+    alert('привет');
+});
+</code></pre>
+    </section>
+
+    <section>
+        <h3>Удаление обработчика событий</h3>
+        <pre class="fragment"><code class="hljs javascript size-XS" data-noescape data-trim>
+var li = document.getElementByTagName('li')[0];
+li.addEventListener('click', ()=>alert('привет'));
+<span class="fragment">// не работает</span>
+li.removeEventListener('click', ()=>alert('привет'));
+</code></pre>
+        <br>
+        <pre class="fragment"><code class="hljs javascript size-XS" data-trim>
+var li = document.getElementByTagName('li')[0];
+var onClickHandler = () => {
+    alert('привет');
+}
+li.addEventListener('click', onClickHandler);
+li.removeEventListener('click', onClickHandler);
+</code></pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h3>Особенности событий</h3>
+        <pre class="fragment"><code class="hljs html size-XS" data-trim><style>
+body * {
+    margin: 10px;
+    border: 1px solid blue;
+}
+</style>
+
+<form onclick="alert('form')">FORM
+    <div onclick="alert('div')">DIV
+        <p onclick="alert('p')">P</p>
+    </div>
+</form>
+</code></pre>
+    </section>
+
+    <section>
+        <div class="example-propagation" style="background: #fff">
+            <style>
+                .example-propagation {
+                    padding: 10px !important;
+                }
+                .example-propagation * {
+                    margin: 10px !important;
+                    border: 5px solid blue !important;
+                    color: red;
+                }
+            </style>
+
+            <form onclick="alert('form')">FORM
+                <div onclick="alert('div')">DIV
+                    <p onclick="alert('p')">P</p>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section>
+        <h3>Event</h3><pre class="fragment"><code class="hljs javascript size-XS" data-trim>
+var li = document.getElementByTagName('li')[0];
+var onClickHandler = (event) => {}
+li.addEventListener('click', onClickHandler);
+li.removeEventListener('click', onClickHandler);
+</code></pre>
+    </section>
+
+    <section data-background-image="img/eventflow@2x.png" data-background-size="contain">
+    </section>
+
+    <section>
+        <h3>Не все события всплывают, но при этом их можно поймать на этапе захвата.<br><span class="fragment">Например, focus</span></h3>
+    </section>
+
+    <section>
+        <h3>Самый глубокий элемент, который вызывает событие, называется «целевым» или «исходным» элементом и доступен как event.target.</h3>
+    </section>
+
+    <section>
+        <h3>event.target</h3>
+        <pre class="fragment"><code class="hljs html size-XS" data-trim><script>
+var form = document.getElementsByTagName('form')[0];
+var onClick = (e) => alert(this, e.target);
+form.addEventListener('click', onClick, false);
+</script>
+
+<form style="background: red; padding: 10px;">
+    <input type="text" />
+</form>
+</code></pre>
+    </section>
+
+    <section>
+        <h3>event.target</h3>
+        <pre class=""><code class="hljs html size-XS" data-trim><script>
+var form = document.getElementsByTagName('form')[0];
+var onClick = function (e) { alert(this, e.target) };
+form.addEventListener('click', onClick, false);
+</script>
+
+<form style="background: red; padding: 10px;">
+    <input type="text" />
+</form>
+</code></pre>
+    </section>
+    <section>
+        <h3>event.target</h3>
+
+        <div class="target-example">
+            <form style="background: red; padding: 10px !important; line-height: 1; font-size: 10px;">
+                <input type="text" style="font-size: 50px;" />
+            </form>
+        </div>
+<script>
+var form = document.querySelector('.target-example form');
+var onClick = function (e) { console.log(this, e.target) };
+form.addEventListener('click', onClick, false);
+</script>
+    </section>
+
+    <section>
+        <h3>Работа с событием</h3>
+        <ul>
+            <li class="fragment">event.preventDefault – отменяет обработчик по-умолчанию</li>
+            <li class="fragment">event.stopPropagation – прекращает всплытие</li>
+            <li class="fragment">event.stopImmediatePropagation – прекращает всплытие и не выполняет оставшиеся обработчики события</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h3>Паттерны работы с событиями</h3>
+    </section>
+    <section>
+        <h3>Делегирование</h3>
+
+        <pre class=""><code class="hljs javascript size-XS" data-trim>
+var links = document.querySelectorAll('.menu a');
+var clicked = {};
+var onClick = function () {
+    clicked[this.href] = clicked[this.href] || 0;
+    clicked[this.href]++;
+
+    console.log(clicked);
+};
+for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', onClick);
+}
+</code></pre>
+    </section>
+    <section>
+        <h3>Делегирование</h3>
+<div class="menu1">
+    <a href="https://yandex.ru">Яндекс</a> | <a href="https://google.ru">Google</a> | <a href="https://e1.ru">e1.ru</a>
+</div>
+
+<script>
+var links = document.querySelectorAll('.menu1 a');
+var clicked = {};
+var onClick = function (e) {
+    clicked[this.href] = clicked[this.href] || 0;
+    clicked[this.href]++;
+
+    e.preventDefault();
+
+    console.log(clicked);
+};
+for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', onClick);
+}
+</script>
+    </section>
+    <section>
+        <h3>Делегирование</h3>
+
+        <pre class=""><code class="hljs javascript size-XS" data-trim>
+var menu = document.querySelector('.menu');
+var clicked = {};
+var onClick = function (e) {
+    var href = e.target.href;
+    clicked[href] = clicked[href] || 0;
+    clicked[href]++;
+
+    console.log(clicked);
+};
+menu.addEventListener('click', onClick);
+</code></pre>
+    </section>
+    <section>
+        <h3>Делегирование</h3>
+
+        <pre class=""><code class="hljs javascript size-XS" data-trim>
+var menu = document.querySelector('.menu');
+var clicked = {};
+var onClick = function (e) {
+    if (e.target.nodeName !== 'A') return;
+
+    var href = e.target.href;
+    clicked[href] = clicked[href] || 0;
+    clicked[href]++;
+
+    console.log(clicked);
+};
+menu.addEventListener('click', onClick);
+
+</code></pre>
+    </section>
+
+    <section>
+        <pre class=""><code class="hljs javascript size-XS" data-trim data-noescape>
+var menu = document.querySelector('input');
+var onKeyDown = function (e) {
+    var text = e.target.value;
+
+    makeRequest(text, function (response) {
+        showSuggest(response); <mark class="fragment"><-</mark>
+    });
+};
+menu.addEventListener('keydown', onKeyDown);
+
+</code></pre>
+    </section>
+    <section>
+        <h3>debounce</h3>
+    </section>
+
+    <section>
+        <pre class=""><code class="hljs javascript size-XS" data-trim data-noescape>
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+        var context = this, args = arguments;
+        var later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
+</code></pre>
+    </section>
+
+    <section>
+        <pre class=""><code class="hljs javascript size-XS" data-trim data-noescape>
+var menu = document.querySelector('input');
+var onKeyDown = debounce(function (e) {
+    var text = e.target.value;
+
+    makeRequest(text, function (response) {
+        showSuggest(response);
+    });
+}, 300);
+menu.addEventListener('keydown', onKeyDown);
+</code></pre>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h3>Ajax</h3>
+        <blockquote class="fragment">Asynchronous JavaScript + XML</blockquote>
+    </section>
+
+    <section>
+        <h3>XMLHttpRequest</h3>
+    </section>
+
+    <section>
+        <h3>Fetch</h3>
+        <pre class=""><code class="hljs javascript size-XS" data-trim data-noescape>
+new Fetch('https://mysite.com/getdata')
+    .then((response) => console.log(response));
+</code></pre>
+    </section>
+</section>
+
+
+<!-- Заключение -->
+
+    <section>
+        <h3>Ссылки</h3>
+        <ul>
+            <li><a href="https://learn.javascript.ru/">Learn JavaScript. Часть 2</a></li>
+            <li><a href="https://developer.mozilla.org/ru/docs/Web/Events">События</a></li>
+            <li><a href="https://learn.javascript.ru/fetch">Fetch</a></li>
+        </ul>
+    </section>
+
+
+<script src="../lib/js/head.min.js"></script>
+<script src="../js/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        slideNumber: true,
+        history: true,
+        center: true,
+        hideAddressBar: true,
+        transition: 'slide',
+        dependencies: [
+            {
+                src: '../plugin/highlight/highlight.js',
+                async: true,
+                condition: function () {
+                    return Boolean(document.querySelector('pre code'));
+                },
+                callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
+        ]
+    });
+</script>
+</body>
+</html>
