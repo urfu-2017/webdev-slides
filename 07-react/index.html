@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>React.js</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="../reveal/index.min.css">
+        <link rel="stylesheet" href="../reveal/theme.common.css">
+        <link rel="stylesheet" href="../reveal/theme.white.css">
+        <link rel="stylesheet" href="../reveal/theme.black.css">
+    </head>
+    <body class="white">
+        <div class="reveal">
+            <div class="slides">
+
+                <section class="center">
+                    <h1 style="font-size: 200px; display: flex; align-items: center; justify-content: center;"><img
+                            src="./images/react-logo.svg" width="300">React</h1>
+                    <h2 class="grey" style="font-size: 30px; font-weight: bold;">Максим Воронцов</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Немного истории</h2>
+                    <h2 class="grey" style="font-size: 35px;">Эволюция задач перед JS</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Простые задачи</h2>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/simple-javascript.gif" width="600">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Взаимодействие</h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/multi-page-app-1.svg" width="750">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Взаимодействие</h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/multi-page-app-2.svg" width="750">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Взаимодействие</h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/multi-page-app-3.svg" width="750">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Взаимодействие</h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/multi-page-app-4.svg" width="750">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Более сложные задачи</h2>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/more-complex-javascript.gif" width="900">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Single
+                        Page Application
+                        &nbsp;<span class="grey" style="font-size: 35px;">(SPA)</span></h2>
+                    <p>Веб-приложение или сайт, который загружает только одну страницу и все последующие запросы
+                        обрабатываются без полной перезагрузки страницы.</p>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Взаимодействие</h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/single-page-app-1.svg" width="750">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Взаимодействие</h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/single-page-app-2.svg" width="750">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Взаимодействие</h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/single-page-app-3.svg" width="750">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Взаимодействие</h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/single-page-app-4.svg" width="750">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Isomorphic&nbsp;<span class="grey" style="font-size: 35px;">(Universal)</span>&nbsp;Web App</h2>
+                    <p>Приложение, которое может работать как на стороне сервера, так и на стороне клиента.</p>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Взаимодействие</h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/isomorphic-app.svg" width="750">
+                    </div>
+                </section>
+
+                <section
+                        data-background-image="https://cdn-images-1.medium.com/max/1050/1*i3hzpSEiEEMTuWIYviYweQ.png">
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Концепции React</h2>
+                    <div style="display: flex; justify-content: center; font-size: 40px">
+                        <ol>
+                            <li class="fragment">Компонентный подход</li>
+                            <li class="fragment">Эффективная абстракция над DOM</li>
+                            <li class="fragment">Изоморфный код</li>
+                            <li class="fragment">Реактивный рендеринг</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Без Virtual DOM</h2>
+                    <div style="text-align: center;">
+                        <img width=350 src="./images/without-vdom.svg" />
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">С Virtual DOM</h2>
+                    <div style="text-align: center;">
+                        <img width=350 src="./images/with-vdom.svg" />
+                    </div>
+                </section>
+
+                <section class="center" data-background-video="./images/vdom.mp4"
+                         data-background-video-loop data-background-size="contain"></section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Первый компонент</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Первый компонент</h2>
+                    <div style="display: flex; justify-content: center;align-items: center;">
+                        <img src="./images/first-component.png" width="500">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; position: relative;">
+                        <div>Первый компонент</div>
+                        <div class="fragment"
+                             style="position: absolute; top: 0;left: 0; right: 0; background-color: #fff;">Functional <span class="grey">(Stateless)</span>
+                            component
+                        </div>
+                    </h2>
+                    <pre><code data-trim data-noescape class="javascript" style="font-size: 24px;">
+                        import React from 'react';
+
+                        function Form() {
+                            return (
+                                &lt;<span class="hljs-name">div</span> <span
+                            class="hljs-attr">className</span>=<span class="hljs-string">"form"</span>>
+                                    &lt;<span class="hljs-name">input</span> <span
+                            class="hljs-attr">placeholder</span>=<span class="hljs-string">"Ключ заметки"</span> />
+                                    &lt;<span class="hljs-name">textarea</span> <span
+                            class="hljs-attr">placeholder</span>=<span class="hljs-string">"Текст заметки"</span> />
+                                    &lt;<span class="hljs-name">button</span>>Добавить новую заметку&lt;/<span
+                            class="hljs-name">button</span>>
+                                &lt;/<span class="hljs-name">div</span>>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; position: relative;">
+                        <div>Первый компонент</div>
+                        <div class="fragment"
+                             style="position: absolute; top: 0;left: 0; right: 0; background-color: #fff;">Class <span class="grey">(Stateful)</span>
+                            component
+                        </div>
+                    </h2>
+                    <pre><code data-trim data-noescape class="javascript" style="font-size: 24px;">
+                        import React from 'react';
+
+                        class Form extends React.Component {
+                            render() {
+                                return (
+                                    &lt;<span class="hljs-name">div</span> <span
+                            class="hljs-attr">className</span>=<span class="hljs-string">"form"</span>>
+                                        &lt;<span class="hljs-name">input</span> <span
+                            class="hljs-attr">placeholder</span>=<span class="hljs-string">"Ключ заметки"</span> />
+                                        &lt;<span class="hljs-name">textarea</span> <span
+                            class="hljs-attr">placeholder</span>=<span class="hljs-string">"Текст заметки"</span> />
+                                        &lt;<span class="hljs-name">button</span>>Добавить новую заметку&lt;/<span
+                            class="hljs-name">button</span>>
+                                    &lt;/<span class="hljs-name">div</span>>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Первый компонент</h2>
+                    <pre><code data-trim class="html"
+                               style="background: rgba(0, 0, 0, .03);">&lt;div id="root">&lt;/div></code></pre>
+                    <pre class="fragment"><code data-trim class="javascript" data-noescape>
+                        import React from 'react';
+                        import ReactDOM from 'react-dom';
+
+                        import Form from './Form';
+
+                        ReactDOM.render(&lt;Form />, document.getElementById(<span class="hljs-string">'root'</span>));
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h3 class="grey" style="text-align: center; font-weight: bold;">JSX</h3>
+                    <pre><code data-trim class="html">
+                        &lt;div>
+                            &lt;img className="logo" src="./images/logo.svg" />
+                            &lt;h1 className="title">Список заметок&lt;/h1>
+                        &lt;/div>
+                    </code></pre>
+                    <h3 class="grey" style="text-align: center; font-weight: bold;">JS</h3>
+                    <pre><code data-trim style="font-size: 18px" class="javascript">
+                        React.createElement(
+                            "div",
+                            null,
+                            React.createElement("img", { className: "logo", src: "./images/logo.svg" }),
+                            React.createElement("h1", { className: "title" }, "Список заметок")
+                        );
+                    </code></pre>
+                </section>
+
+                <section data-background-video="./images/jsx-live-compiler-preview.mp4" data-background-video-loop data-background-size="contain">
+                    <a style="position: absolute; left: 0; right: 0; top: 70vh; text-align: center; font-weight: bold;"
+                       href="https://jsx-live.now.sh/" target="_blank">JSX Live Compiler</a>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; white-space: nowrap">Все <strong>html</strong> атрибуты именуются в
+                        <strong>camelCase</strong> стиле</h2>
+                    <div class="grey" style="font-size: 30px; text-align: center; font-weight: bold;">HTML</div>
+                    <pre><code class="html" data-trim>
+                        &lt;input class="name" tabindex="2" />
+                    </code></pre>
+                    <div class="grey" style="font-size: 30px; text-align: center; font-weight: bold;">JSX</div>
+                    <pre><code class="html" data-trim>
+                        &lt;input className="name" tabIndex="2" />
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Все элементы должны быть <strong>закрыты</strong></h2>
+                    <div class="grey" style="font-size: 30px; text-align: center; font-weight: bold;">HTML</div>
+                    <pre><code class="html" data-trim>
+                        &lt;div>
+                            &lt;span>Введите ваше имя:&lt;/span>&lt;br>
+                            &lt;input type="text">
+                        &lt;/div>
+                    </code></pre>
+                    <div class="grey" style="font-size: 30px; text-align: center; font-weight: bold;">JSX</div>
+                    <pre><code class="html" data-trim>
+                        &lt;div>
+                            &lt;span>Введите ваше имя:&lt;/span>&lt;br />
+                            &lt;input type="text" />
+                        &lt;/div>
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Имена пользовательских компонентов должны начинаться с <strong>заглавной</strong>
+                        буквы</h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <pre><code data-trim>
+                                    &lt;Article />
+                                </code></pre>
+                            </td>
+                            <td>
+                                <pre><code class="javascript">React.createElement(Article, null);</code></pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><code data-trim>
+                                    &lt;article />
+                                </code></pre>
+                            </td>
+                            <td>
+                                <pre><code class="javascript">React.createElement("article", null);</code></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Может быть только <strong>один</strong> корневой элемент</h2>
+                    <pre><code class="javascript" data-trim data-noescape>
+                        function MyComponent() {
+                            return (
+                                &lt;p>Первый абзац&lt;/p>
+                                &lt;<span class="hljs-name">p</span>>Второй абзац&lt;/<span class="hljs-name">p</span>>
+                            );
+                        }
+                    </code></pre>
+                    <div style="font-size: 30px; text-align: center; font-weight: bold;"><strong class="red fragment">SyntaxError:
+                        Adjacent JSX
+                        elements must be wrapped in an enclosing tag</strong></div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Может быть только <strong>один</strong> корневой элемент</h2>
+                    <pre><code class="javascript" data-trim>
+                        function MyComponent() {
+                            return (
+                                &lt;div>
+                                    &lt;p>Первый абзац&lt;/p>
+                                    &lt;p>Второй абзац&lt;/p>
+                                &lt;/div>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Может быть только <strong>один</strong> корневой элемент</h2>
+                    <pre><code class="javascript" data-trim>
+                        function MyComponent() {
+                            return (
+                                &lt;React.Fragment>
+                                    &lt;p>Первый абзац&lt;/p>
+                                    &lt;p>Второй абзац&lt;/p>
+                                &lt;/React.Fragment>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;"><strong>Javascript</strong> выражения должны быть заключены в
+                        <strong>{ }</strong></h2>
+                    <pre><code class="javascript" data-trim>
+                        const user = { name: 'Максим' };
+
+                        function Greeting() {
+                            return &lt;div>Привет, {user.name}&lt;/div>;
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Всё содержимое экранируется</h2>
+                    <pre><code class="javascript" data-trim>
+                        const someHtml = '&lt;strong>Максим&lt;/strong>';
+
+                        function Greeting() {
+                            return &lt;div>Привет, {someHtml}&lt;/div>;
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Всё содержимое экранируется</h2>
+                    <pre><code class="javascript" data-trim>
+                        const someHtml = '&lt;strong>Максим&lt;/strong>';
+
+                        function Greeting() {
+                            return (
+                                &lt;div dangerouslySetInnerHTML={{ __html: someHtml }} />
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Объединение компонентов</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Объединение компонентов</h2>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/composite-components.png" width="500">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Объединение компонентов</h2>
+                    <pre><code class="javascript" data-trim data-noescape>
+                        import Form from './Form';
+                        import Notes from './Notes';
+
+                        function NotesApp() {
+                            return (
+                                &lt;div className="notes-app">
+                                    &lt;Notes />
+                                    &lt;Form />
+                                &lt;/div>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Атрибуты</h2>
+                    <h2 class="grey" style="font-size: 35px; font-weight: bold;">Props</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Атрибуты&nbsp;<span
+                            class="grey" style="font-size: 40px;">(Props)</span></h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/props-flow-1.svg" width="900">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Атрибуты&nbsp;<span
+                            class="grey" style="font-size: 40px;">(Props)</span></h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/props-flow-2.svg" width="900">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Атрибуты&nbsp;<span
+                            class="grey" style="font-size: 40px;">(Props)</span></h2>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="images/props-flow-3.svg" width="900">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Атрибуты&nbsp;<span
+                            class="grey" style="font-size: 40px;">(Props)</span></h2>
+                    <pre><code class="language-javascript" data-trim data-noescape>
+                        function Notes() {
+                            return (
+                                &lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span
+                            class="hljs-string">"notes"</span>>
+                                    &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>=<span
+                            class="hljs-string">"Books"</span> <span
+                            class="hljs-attr">text</span>=<span class="hljs-string">"Books to read"</span> />
+                                    &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>=<span
+                            class="hljs-string">"Music"</span> <span
+                            class="hljs-attr">text</span>=<span class="hljs-string">"Music to listen"</span> />
+                                    &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>=<span
+                            class="hljs-string">"Films"</span> <span
+                            class="hljs-attr">text</span>=<span class="hljs-string">"Films to watch"</span> />
+                                &lt;/<span class="hljs-name">div</span>>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Атрибуты&nbsp;<span
+                            class="grey" style="font-size: 40px;">(Props)</span></h2>
+                    <pre><code class="javascript" data-trim>
+                        function Note({ name, text }) {
+                            return (
+                                &lt;div className="note">
+                                    &lt;h1>{name}&lt;/h1>
+                                    &lt;p>{text}&lt;/p>
+                                &lt;/div>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Атрибуты&nbsp;<span
+                            class="grey" style="font-size: 40px;">(Props)</span></h2>
+                    <pre><code class="javascript" data-trim>
+                        export default class Note extends React.Component {
+                            render() {
+                                const { name, text } = this.props;
+
+                                return (
+                                    &lt;div className="note">
+                                        &lt;h1>{name}&lt;/h1>
+                                        &lt;p>{text}&lt;/p>
+                                    &lt;/div>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Типы атрибутов и значения по-умолчанию</h2>
+                    <pre><code class="javascript" data-trim style="font-size: 23px">
+                        import PropTypes from 'prop-types';
+
+                        function Note({ name, text }) {
+                            return ...
+                        }
+
+                        Note.propTypes = {
+                            name: PropTypes.string,
+                            text: PropTypes.string.isRequired
+                        };
+
+                        Note.defaultProps = {
+                            name: 'Note name'
+                        };
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Типы атрибутов и значения по-умолчанию</h2>
+                    <pre><code class="javascript" data-trim style="font-size: 23px">
+                        import PropTypes from 'prop-types';
+
+                        export default class Note extends React.Component {
+                            static propTypes = {
+                                name: PropTypes.string.isRequired,
+                                text: PropTypes.string.isRequired
+                            }
+
+                            static defaultProps = { name: 'Note name' }
+
+                            render() {
+                                const { name, text  } = this.props;
+
+                                return ...
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Контекст</h2>
+                    <h2 class="grey" style="font-size: 35px; font-weight: bold;">Context</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Контекст&nbsp;<span class="grey" style="font-size: 40px;">(Context)</span></h2>
+                    <img src="./images/context.svg" width="750">
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Контекст&nbsp;<span class="grey" style="font-size: 40px;">(Context)</span></h2>
+                    <pre><code data-trim class="javascript">
+                        import React from 'react';
+
+                        const ThemeContext = React.createContext('light');
+
+                        export default ThemeContext;
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Контекст&nbsp;<span class="grey" style="font-size: 40px;">(Context)</span></h2>
+                    <pre><code class="javascript" data-trim data-noescape>
+                        import ThemeContext from './ThemeContext.js';
+
+                        function Note() {
+                            return (
+                                &lt;ThemeContext.Consumer>
+                                    {theme => {
+                                        return &lt;div>...&lt;/div>;
+                                    }}
+                                &lt;/ThemeContext.Consumer>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Контекст&nbsp;<span class="grey" style="font-size: 40px;">(Context)</span></h2>
+                    <pre><code class="javascript" data-trim data-noescape>
+                        import ThemeContext from './ThemeContext.js';
+
+                        function NotesApp() {
+                            return (
+                                &lt;ThemeContext.Provider value="dark">
+                                    ...
+                                &lt;/ThemeContext.Provider>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Потомки</h2>
+                    <h2 class="grey" style="font-size: 35px; font-weight: bold;">Children</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Потомки&nbsp;<span
+                            class="grey" style="font-size: 40px;">(Children)</span></h2>
+                    <pre><code class="language-javascript" data-trim data-noescape>
+                        function Notes() {
+                            return (
+                                &lt;<span class="hljs-name">div</span> <span
+                        class="hljs-attr">className</span>=<span class="hljs-string">"notes"</span>>
+                                    &lt;Note name="Books">
+                                        &lt;span>Books to read&lt;/span>
+                                        &lt;button>Like!&lt;/button>
+                                    &lt;/Note>
+                                &lt;/<span class="hljs-name">div</span>>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">Потомки&nbsp;<span
+                            class="grey" style="font-size: 40px;">(Children)</span></h2>
+                    <pre><code class="language-javascript" data-trim data-noescape>
+                        function Note({ name, children }) {
+                            return (
+                                &lt;div className="note">
+                                    &lt;h1>{name}&lt;/h1>
+                                    &lt;p>{children}&lt;/p>
+                                &lt;/div>
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section data-background-video="./images/set-state-example.mp4" data-background-size="contain" data-background-video-loop></section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Состояние компонента</h2>
+                    <h2 class="grey" style="font-size: 35px; font-weight: bold;">State</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span></h2>
+                    <div style="display: flex; justify-content: center; font-size: 40px">
+                        <ol>
+                            <li class="red">Может быть только у классов</li>
+                            <li class="fragment">Компонент реагирует на изменения состояния</li>
+                            <li class="fragment">Инициализация происходит в одном месте</li>
+                            <li class="fragment">Изменять состояние напрямую нельзя</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span></h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 16px">
+                        export default class Note extends React.Component {
+                            state = { viewType: 'short' }
+
+                            viewFull = () => this.setState({ viewType: 'full' })
+
+                            render() {
+                                const { viewType } = this.state;
+
+                                return (
+                                    &lt;div className="note">
+                                        &lt;h1>Название заметки&lt;/h1>
+                                        {viewType === <span class="hljs-string">'short'</span>
+                                            ? (
+                                                &lt;React.Fragment>
+                                                    &lt;p>Краткое содержание&lt;/p>
+                                                    &lt;button onClick={this.viewFull}>Читать подробнее&lt;/button>
+                                                &lt;/React.Fragment>
+                                            ) : &lt;p>Полный текст&lt;/p>
+                                        }
+                                    &lt;/div>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span></h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 16px">
+                        export default class Note extends React.Component {
+                            state = { viewType: 'short' }
+
+                            <span style="opacity: .2;">viewFull = () => this.setState({ viewType: 'full' })
+
+                            render() {
+                                const { viewType } = this.state;
+
+                                return (
+                                    &lt;div className="note">
+                                        &lt;h1>Название заметки&lt;/h1>
+                                        {viewType === <span class="hljs-string">'short'</span>
+                                            ? (
+                                                &lt;React.Fragment>
+                                                    &lt;p>Краткое содержание&lt;/p>
+                                                    &lt;button onClick={this.viewFull}>Читать подробнее&lt;/button>
+                                                &lt;/React.Fragment>
+                                            ) : &lt;p>Полный текст&lt;/p>
+                                        }
+                                    &lt;/div>
+                                );
+                            }</span>
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span></h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 16px">
+                        export default class Note extends React.Component {
+                            <span style="opacity: .2;">state = { viewType: 'short' }
+
+                            viewFull = () => this.setState({ viewType: 'full' })</span>
+
+                            render() {
+                                const { viewType } = this.state;
+
+                                <span style="opacity: .2;">return (
+                                    &lt;div className="note">
+                                        &lt;h1>Название заметки&lt;/h1></span>
+                                        {viewType === <span class="hljs-string">'short'</span>
+                                            ? (
+                                                &lt;React.Fragment>
+                                                    &lt;p>Краткое содержание&lt;/p>
+                                                    &lt;button onClick={this.viewFull}>Читать подробнее&lt;/button>
+                                                &lt;/React.Fragment>
+                                            ) : &lt;p>Полный текст&lt;/p>
+                                        }<span style="opacity: .2;">
+                                    &lt;/div>
+                                );</span>
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; align-items: center; justify-content: center;">
+                        Состояние компонента&nbsp;<span class="grey" style="font-size: 40px;">(State)</span></h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 16px">
+                        export default class Note extends React.Component {
+                            <span style="opacity: .2;">state = { viewType: 'short' }</span>
+
+                            viewFull = () => this.setState({ viewType: 'full' })
+
+                            <span style="opacity: .2;">render() {
+                                const { viewType } = this.state;
+
+                                return (
+                                    &lt;div className="note">
+                                        &lt;h1>Название заметки&lt;/h1>
+                                        {viewType === <span class="hljs-string">'short'</span>
+                                            ? (
+                                                &lt;React.Fragment>
+                                                    &lt;p>Краткое содержание&lt;/p>
+                                                    &lt;button onClick={this.viewFull}>Читать подробнее&lt;/button>
+                                                &lt;/React.Fragment>
+                                            ) : &lt;p>Полный текст&lt;/p>
+                                        }
+                                    &lt;/div>
+                                );
+                            }</span>
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Жизненный цикл компонента</h2>
+                    <h2 class="grey" style="font-size: 35px; font-weight: bold;">Component life-cycle</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Этапы жизненного цикла</h2>
+                    <div style="display: flex; justify-content: center; font-size: 40px">
+                        <ol>
+                            <li>Монтирование компонента <span style="font-size: 40px;" class="grey">(Mounting)</span>
+                            </li>
+                            <li>Изменение атрибутов или состояния <span style="font-size: 40px;"
+                                                                        class="grey">(Updating)</span></li>
+                            <li>Удаление компонента <span style="font-size: 40px;" class="grey">(Unmounting)</span></li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Монтирование <span class="grey"
+                                                                      style="font-size: 40px">(Mounting)</span></h2>
+                    <pre><code class="bash" data-trim data-noescape style="text-align: center;">
+                        constructor
+                        ↓
+                        <span style="position: absolute; transform: translateX(-100%)" class="grey">(static)</span> getDerivedStateFromProps
+                        ↓
+                        render
+                        ↓
+                        componentDidMount
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Изменение атрибутов <span class="grey" style="font-size: 40px">(Updating)</span>
+                    </h2>
+                    <pre><code class="bash" data-trim data-noescape style="text-align: center;">
+                        <span style="position: absolute; transform: translateX(-100%)" class="grey">(static)</span> getDerivedStateFromProps
+                        ↓
+                        shouldComponentUpdate
+                        ↓
+                        render
+                        ↓
+                        componentDidUpdate
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Изменение состояния <span class="grey" style="font-size: 40px">(Updating)</span>
+                    </h2>
+                    <pre><code class="bash" data-trim style="text-align: center;">
+                        shouldComponentUpdate
+                        ↓
+                        render
+                        ↓
+                        componentDidUpdate
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Удаление компонента&nbsp;<span class="grey" style="font-size: 40px">(Unmounting)</span>
+                    </h2>
+                    <pre><code class="bash" data-trim style="text-align: center;">
+                        componentWillUnmount
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Работа со списками</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Работа со списками</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 22px;">
+                        function NotesList({ notes }) {
+                            return notes.map(note => (
+                                &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">name</span>={note.name} <span class="hljs-attr">text</span>={note.text} />
+                            ));
+                        }
+                    </code></pre>
+                    <p class="red fragment" style="font-size: 30px;">Each child in an array or iterator should have a unique "key" prop.
+                        <br> Check the render method of <span style="font-weight: bold;">NotesList</span>. See https://fb.me/react-warning-keys for more information.</p>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Работа со списками</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 22px;">
+                        function NotesList({ notes }) {
+                            return notes.map(note => (
+                                &lt;<span class="hljs-name">Note</span> <span class="hljs-attr">key</span>={note.id} <span class="hljs-attr">name</span>={note.name} <span class="hljs-attr">text</span>={note.text} />
+                            ));
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Keys</h2>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 35px;">
+                        <ul style="list-style: none">
+                            <li>Key должен однозначно определять элемент списка</li>
+                            <li>Повторяющиеся key в рамках одного списка недопустимы</li>
+                            <li>Использовать индекс элемента в массиве лучше только тогда, когда другого выхода нет</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Работа с формами</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Работа с формами</h2>
+                    <div style="font-size: 40px; display: flex; justify-content: center;">
+                        <ul style="list-style: none">
+                            <li>Как получить данные из формы?</li>
+                            <li>Как обрабатывать события?</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Виды компонентов</h2>
+                    <div style="display: flex; justify-content: center; font-size: 40px;">
+                        <ol>
+                            <li>Управляемые &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="grey">(Controlled)</span>
+                            </li>
+                            <li>Неуправляемые&nbsp;&nbsp;&nbsp;&nbsp;<span class="grey">(Uncontrolled)</span></li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+                        Неуправляемые компоненты
+                        <br>
+                        <span class="grey" style="font-size: 40px;">(Uncontrolled components)</span></h2>
+                    <p style="font-size: 40px;"><strong>DOM</strong> управляет текущим состоянием компонента</p>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">Ссылка
+                        на DOM элемент&nbsp;<span class="grey" style="font-size: 40px;">(Ref)</span></h2>
+                    <pre><code class="javascript" data-trim style="font-size: 23px;" data-noescape>
+                        class Form extends React.Component {
+                            inputRef = input => this.input = input
+
+                            handleSubmit = () => this.makeSomeApiRequest(this.input.value)
+
+                            render() {
+                                return (
+                                    &lt;<span class="hljs-name">div</span>>
+                                        &lt;<span class="hljs-name">input</span> <span
+                            class="hljs-attr">ref</span>={<span class="hljs-keyword">this</span>.inputRef} />
+                                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={<span
+                            class="hljs-keyword">this</span>.handleSubmit}>
+                                            Отправить
+                                        &lt;/<span class="hljs-name">button</span>>
+                                    &lt;/<span class="hljs-name">div</span>>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">Ссылка
+                        на DOM элемент&nbsp;<span class="grey" style="font-size: 40px;">(Ref)</span></h2>
+                    <pre><code class="javascript" data-trim style="font-size: 23px;" data-noescape>
+                        class Form extends React.Component {
+                            inputRef = input => this.input = input
+
+                            <span style="opacity: .2;">handleSubmit = () => this.makeSomeApiRequest(this.input.value)</span>
+
+                            render() {
+                                return (
+                                    &lt;<span class="hljs-name">div</span>>
+                                        &lt;<span class="hljs-name">input</span> <span
+                            class="hljs-attr">ref</span>={<span class="hljs-keyword">this</span>.inputRef} />
+                                        <span style="opacity: .2;">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={<span
+                                                class="hljs-keyword">this</span>.handleSubmit}>
+                                            Отправить
+                                        &lt;<span class="hljs-name">button</span>></span>
+                                    &lt;/<span class="hljs-name">div</span>>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; display: flex; justify-content: center; align-items: center;">Ссылка
+                        на DOM элемент&nbsp;<span class="grey" style="font-size: 40px;">(Ref)</span></h2>
+                    <pre><code class="javascript" data-trim style="font-size: 23px;" data-noescape>
+                        class Form extends React.Component {
+                            <span style="opacity: .2;">inputRef = input => this.input = input</span>
+
+                            handleSubmit = () => this.makeSomeApiRequest(this.input.value)
+
+                            render() {
+                                return (
+                                    &lt;<span class="hljs-name">div</span>>
+                                        <span style="opacity: .2;">&lt;<span class="hljs-name">input</span> <span
+                                                class="hljs-attr">ref</span>={<span class="hljs-keyword">this</span>.inputRef} /></span>
+                                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={<span
+                            class="hljs-keyword">this</span>.handleSubmit}>
+                                            Отправить
+                                        &lt;<span class="hljs-name">button</span>>
+                                    &lt;/<span class="hljs-name">div</span>>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+                        Неуправляемые компоненты
+                        <br>
+                        <span class="grey" style="font-size: 40px;">(Uncontrolled components)</span></h2>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 35px;">
+                        <ul style="list-style: none">
+                            <li class="green">Простота</li>
+                            <li class="green">Один обработчик на всю форму</li>
+                            <li class="red">Контроль из кода</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+                        Управляемые компоненты
+                        <br>
+                        <span class="grey" style="font-size: 40px;">(Controlled components)</span></h2>
+                    <p style="font-size: 40px;"><strong>React</strong> управляет текущим состоянием компонента</p>
+                </section>
+
+                <section class="center">
+                    <h2 style="white-space: nowrap; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                        Управляемые компоненты
+                        &nbsp;<span class="grey" style="font-size: 40px;">(Controlled components)</span></h2>
+                    <pre><code class="javascript" data-trim style="font-size: 20px;" data-noescape>
+                        class Form extends React.Component {
+                            state = { value: '' }
+
+                            handleSubmit = () => this.makeSomeApiRequest(this.state.value)
+                            handleChange = event => this.setState({
+                                value: event.target.value
+                            })
+
+                            render() {
+                                return (
+                                    &lt;<span class="hljs-name">div</span>>
+                                        &lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>={<span
+                            class="hljs-keyword">this</span>.state.value} <span class="hljs-attr">onChange</span>={<span
+                            class="hljs-keyword">this</span>.handleChange} />
+                                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={<span
+                            class="hljs-keyword">this</span>.handleSubmit}>
+                                            Отправить
+                                        &lt;<span class="hljs-name">button</span>>
+                                    &lt;/<span class="hljs-name">div</span>>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="white-space: nowrap; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                        Управляемые компоненты
+                        &nbsp;<span class="grey" style="font-size: 40px;">(Controlled components)</span></h2>
+                    <pre><code class="javascript" data-trim style="font-size: 20px;" data-noescape>
+                        class Form extends React.Component {
+                            state = { value: '' }
+
+                            <span style="opacity: .2;">handleSubmit = () => this.makeSomeApiRequest(this.state.value)</span>
+                            handleChange = event => this.setState({
+                                value: event.target.value
+                            })
+
+                            render() {
+                                return (
+                                    &lt;<span class="hljs-name">div</span>>
+                                        &lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>={<span
+                            class="hljs-keyword">this</span>.state.value} <span class="hljs-attr">onChange</span>={<span
+                            class="hljs-keyword">this</span>.handleChange} />
+                                        <span style="opacity: .2;">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={<span
+                                                class="hljs-keyword">this</span>.handleSubmit}>
+                                            Отправить
+                                        &lt;<span class="hljs-name">button</span>></span>
+                                    &lt;/<span class="hljs-name">div</span>>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="white-space: nowrap; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                        Управляемые компоненты
+                        &nbsp;<span class="grey" style="font-size: 40px;">(Controlled components)</span></h2>
+                    <pre><code class="javascript" data-trim style="font-size: 20px;" data-noescape>
+                        class Form extends React.Component {
+                            <span style="opacity: .2;">state = { value: '' }</span>
+
+                            handleSubmit = () => this.makeSomeApiRequest(this.state.value)
+                            <span style="opacity: .2;">handleChange = event => this.setState({
+                                value: event.target.value
+                            })</span>
+
+                            render() {
+                                return (
+                                    &lt;<span class="hljs-name">div</span>>
+                                        <span style="opacity: .2;">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>={<span
+                                                class="hljs-keyword">this</span>.state.value} <span class="hljs-attr">onChange</span>={<span
+                                                class="hljs-keyword">this</span>.handleChange} /></span>
+                                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={<span
+                            class="hljs-keyword">this</span>.handleSubmit}>
+                                            Отправить
+                                        &lt;<span class="hljs-name">button</span>>
+                                    &lt;/<span class="hljs-name">div</span>>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold;">
+                        Управляемые компоненты
+                        <br>
+                        <span class="grey" style="font-size: 40px;">(Controlled components)</span></h2>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 35px;">
+                        <ul style="list-style: none">
+                            <li class="green">Состояние управляется через интерфейс</li>
+                            <li class="green">Полный контроль над изменениями</li>
+                            <li class="red">Более сложное взаимодействие</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Сборка</h2>
+                </section>
+
+                <section data-background-video="./images/webpack.mp4" data-background-video-loop="true"></section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">webpack</h2>
+                    <pre><code class="bash" data-noescape data-trim>
+                        <span class="red">$</span> npm i webpack webpack-cli babel-loader babel-preset-react
+                    </code></pre>
+                    <pre class="fragment"><code class="javascript" data-trim style="font-size: 15px">
+                        // webpack.config.js
+
+                        const path = require('path');
+
+                        module.exports = {
+                            entry: './index.js',
+                            output: {
+                                path: path.join(__dirname, './build')
+                            },
+                            module: {
+                                rules: [{
+                                    test: /\.js$/,
+                                    loader: 'babel-loader',
+                                    options: {
+                                        presets: ['react']
+                                    }
+                                }]
+                            }
+                        };
+                    </code></pre>
+                    <pre class="fragment"><code class="bash" data-trim data-noescape>
+                        <span class="red">$</span> webpack --config webpack.config.js
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">create-react-app</h2>
+                    <pre><code class="bash" data-trim data-noescape>
+                        <span class="red">$</span> npm install -g create-react-app
+                        <span class="fragment"><span class="red">$</span> create-react-app notes-app</span>
+                        <span class="fragment"><span class="red">$</span> cd notes-app</span>
+                        <span class="fragment"><span class="red">$</span> npm run start
+                        <span class="grey" style="font-size: 18px;">
+                        Compiled successfully!
+
+                        You can now view <span style="font-weight: bold;">notes-app</span> in the browser.
+                            <span style="font-weight: bold;">Local</span>:            http://localhost:<span
+                                style="font-weight: bold;">3000</span>/
+
+                        Note that the development build is not optimized.
+                        To create a production build, use <span class="green">npm run build.</span></span></span>
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2 style="font-weight: bold;">create-react-app</h2>
+                    <pre><code class="bash" style="font-size: 20px;" data-trim>
+                        notes-app
+                        ├── README.md
+                        ├── node_modules
+                        ├── package.json
+                        ├── .gitignore
+                        ├── public
+                        │   ├── favicon.ico
+                        │   ├── index.html
+                        │   └── manifest.json
+                        └── src
+                            ├── App.css
+                            ├── App.js
+                            ├── App.test.js
+                            ├── index.css
+                            ├── index.js
+                            ├── logo.svg
+                            └── registerServiceWorker.js
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2 style="font-weight: bold;">create-react-app</h2>
+                    <pre><code class="bash" style="font-size: 20px;" data-trim data-noescape>
+                        notes-app
+                        <span style="opacity: .2">├── README.md</span>
+                        <span style="opacity: .2">├── node_modules</span>
+                        <span style="opacity: .2">├── package.json</span>
+                        <span style="opacity: .2">├── .gitignore</span>
+                        ├── public
+                        │   <span style="opacity: .2">├── favicon.ico</span>
+                        │   ├── index.html
+                        │   <span style="opacity: .2">└── manifest.json</span>
+                        └── src
+                            <span style="opacity: .2">├── App.css</span>
+                            <span style="opacity: .2">├── App.js</span>
+                            <span style="opacity: .2">├── App.test.js</span>
+                            <span style="opacity: .2">├── index.css</span>
+                            ├── index.js
+                            <span style="opacity: .2">├── logo.svg</span>
+                            <span style="opacity: .2">└── registerServiceWorker.js</span>
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">create-react-app</h2>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 35px;">
+                        <ul style="list-style: none">
+                            <li class="green">Очень быстрый старт</li>
+                            <li class="green">Активное развитие и поддержка от разработчиков React</li>
+                            <li class="red">Сложности при интеграции со своим сервером</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background-image="./images/nextjs.png" data-background-size="800px">
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">next.js</h2>
+                    <pre style="margin: 0;"><code class="bash" data-trim data-noescape style="font-size: 20px;">
+                        <span class="red">$</span> mkdir notes-app && cd notes-app
+                        <span class="fragment"><span class="red">$</span> npm install --save next react react-dom</span>
+                    </code></pre>
+                    <pre class="fragment" style="margin: 0;"><code data-trim data-noescape style="font-size: 18px;">
+                        <span class="grey">package.json</span>
+                        {
+                          "scripts": {
+                            "dev": "next",
+                            "build": "next build",
+                            "start": "next start"
+                          }
+                        }
+                    </code></pre>
+                    <pre class="fragment" style="margin: 0;"><code data-trim data-noescape style="font-size: 18px;">
+                        <span class="grey">./pages/index.js</span>
+                        export default () => &lt;div>Welcome to next.js!&lt;/div>
+                    </code></pre>
+                    <pre class="fragment" style="margin: 0;"><code class="bash" data-trim data-noescape
+                                                                   style="font-size: 20px;">
+                        <span class="red">$</span> npm run dev
+                        <span style="opacity: .5; font-size: 15px;"><span style="background-color: #63a35c;">DONE</span>  <span
+                                style="color: #63a35c;">Compiled successfully span 1773ms</span>
+                         > Ready on http://localhost:3000</span>
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">next.js</h2>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 35px;">
+                        <ul style="list-style: none">
+                            <li class="green">Очень быстрый старт</li>
+                            <li class="green">Активное развитие и поддержка</li>
+                            <li class="green">Множество точек для расширения и кастомизации</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">next.js&nbsp;<span class="grey">Свой сервер</span></h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 18px;">
+                        const { parse } = require('url');
+
+                        const next = require('next');
+                        const server = require('express')();
+
+                        <span class="fragment" data-fragment-index="1">const app = next({ dev: process.env.NODE_ENV !== 'production' });</span>
+
+                        <span class="fragment" data-fragment-index="3">const render = pageName => (req, res) => app.render(req, res, `/${pageName}`);
+                        const handleRequest = (req, res) =>
+                            app.getRequestHandler()(req, res, parse(req.url, true));</span>
+
+                        <span class="fragment" data-fragment-index="2">app.prepare().then(() => {
+                            <span class="fragment" data-fragment-index="3">server
+                                .get('/notes', render('index'))
+                                .get('/notes/:note', render('note'))
+                                .get('*', handleRequest)
+                                .listen(3000, () => console.log('Listening on http://localhost:3000'));</span>
+                        });</span>
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Почитать</h2>
+                    <div style="text-align: center;">
+                        <a href="https://reactjs.org/">reactjs.org</a><br>
+                        <a href="https://github.com/enaqx/awesome-react">awesome-react</a><br>
+                        <a href="https://reactjs.org/docs/composition-vs-inheritance.html">Composition vs Inheritance</a><br>
+                        <a href="https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318">Index as a key is an anti-pattern</a>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Посмотреть</h2>
+                    <div style="text-align: center;">
+                        <a href="https://courses.totalreact.com/p/advanced-react-free">Advanced React.js</a><br>
+                        <a href="https://www.youtube.com/watch?v=XLJN4JfniH4">How React Context API works</a><br>
+                        <a href="https://egghead.io/courses/the-beginner-s-guide-to-reactjs">The Beginner's Guide to ReactJS</a><br>
+                        <a href="https://egghead.io/courses/start-learning-react">Start Learning React</a>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Вопросы?</h2>
+                </section>
+
+            </div>
+        </div>
+        <script src="../reveal/index.min.js"></script>
+    </body>
+</html>
