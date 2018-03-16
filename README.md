@@ -6,3 +6,4 @@
 1. Эксплуатация сервиса ([слайды](http://urfu-2017.github.io/webdev-slides/04-operating/index.html), [pdf](04-operating/index.pdf))
 1. Клиент-сервер (HTTP, REST, CORS, WebSocket) ([слайды](http://urfu-2017.github.io/webdev-slides/05-client-server/index.html), [pdf](05-client-server/index.pdf))
 1. Браузер и JS ([слайды](http://urfu-2017.github.io/webdev-slides/06-browser-and-js/lection/index.html))
+1. React ([слайды](http://urfu-2017.github.io/webdev-slides/07-react/index.html))
