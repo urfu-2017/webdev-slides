@@ -23,3 +23,4 @@
 
 1. Первый хакатон ([слайды](https://urfu-2017.github.io/webdev-slides/hackatone-01/index.html))
 1. Второй хакатон ([слайды](https://urfu-2017.github.io/webdev-slides/hackatone-02/index.html))
+1. Третий хакатон ([слайды](https://urfu-2017.github.io/webdev-slides/hackatone-03/index.html))
