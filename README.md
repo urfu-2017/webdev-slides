@@ -7,3 +7,7 @@
 1. Клиент-сервер (HTTP, REST, CORS, WebSocket) ([слайды](http://urfu-2017.github.io/webdev-slides/05-client-server/index.html), [pdf](05-client-server/index.pdf))
 1. Браузер и JS ([слайды](http://urfu-2017.github.io/webdev-slides/06-browser-and-js/lection/index.html))
 1. React ([слайды](http://urfu-2017.github.io/webdev-slides/07-react/index.html))
+
+## Хакатоны
+
+1. Первый хакатон ([слайды](http://urfu-2017.github.io/webdev-slides/hackatone-01/index.html))
