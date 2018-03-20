@@ -566,188 +566,131 @@
                     <h2 style="font-weight: bold;">GraphQL Server</h2>
                 </section>
 
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">GraphQL Server</h2>-->
-                    <!--<pre><code class="bash" data-trim data-noescape><span class="red">$</span> npm install &#45;&#45;save express express-graphql</code></pre>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
-                        <!--const express = require('express');-->
-                        <!--const graphql = require('express-graphql');-->
+                <section class="center">
+                    <h2 style="font-weight: bold;">GraphQL Server</h2>
+                    <pre><code class="bash" data-trim data-noescape><span class="red">$</span> npm install --save express express-graphql</code></pre>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        const express = require('express');
+                        const graphql = require('express-graphql');
 
-                        <!--const schema = require('./schema');-->
+                        const schema = require('./schema');
 
-                        <!--const server = express();-->
+                        const server = express();
 
-                        <!--server.use('/graphql', graphql({ schema, graphiql: true }));-->
+                        server.use('/graphql', graphql({ schema, graphiql: true }));
 
-                        <!--server.listen(4000, () => {-->
-                          <!--console.log('Listening on http://localhost:4000/graphql');-->
-                        <!--});-->
-                    <!--</code></pre>-->
-                <!--</section>-->
+                        server.listen(4000, () => {
+                          console.log('Listening on http://localhost:4000/graphql');
+                        });
+                    </code></pre>
+                </section>
 
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">GraphQL Server</h2>-->
-                    <!--<pre><code class="bash" data-trim data-noescape><span class="red">$</span> npm install &#45;&#45;save express express-graphql</code></pre>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
-                        <!--const express = require('express');-->
-                        <!--<span style="opacity: .2">const graphql = require('express-graphql');-->
+                <section class="center">
+                    <h2 style="font-weight: bold;">Schema</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        const { GraphQLID, GraphQLString, GraphQLObjectType } = require('graphql');
 
-                        <!--const schema = require('./schema');</span>-->
+                        const UserType = new GraphQLObjectType({
+                            name: 'User',
+                            fields: {
+                                id: { type: GraphQLID },
+                                name: { type: GraphQLString }
+                            }
+                        });
+                    </code></pre>
+                </section>
 
-                        <!--const server = express();-->
+                <section class="center">
+                    <h2 style="font-weight: bold;">Schema</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        const { GraphQLString, GraphQLObjectType } = require('graphql');
 
-                        <!--<span style="opacity: .2;">server.use('/graphql', graphql({ schema, graphiql: true }));</span>-->
+                        const CommentType = new GraphQLObjectType({
+                            name: 'Comment',
+                            fields: {
+                                text: { type: GraphQLString },
+                                author: { type: UserType }
+                            }
+                        });
+                    </code></pre>
+                </section>
 
-                        <!--server.listen(4000, () => {-->
-                          <!--console.log('Listening on http://localhost:4000/graphql');-->
-                        <!--});-->
-                    <!--</code></pre>-->
-                <!--</section>-->
+                <section class="center">
+                    <h2 style="font-weight: bold;">Schema</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px">
+                        const {
+                            GraphQLList, GraphQLID, GraphQLString, GraphQLObjectType
+                        } = require('graphql');
 
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">GraphQL Server</h2>-->
-                    <!--<pre><code class="bash" data-trim data-noescape><span class="red">$</span> npm install &#45;&#45;save express express-graphql</code></pre>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
-                        <!--<span style="opacity: .2;">const express = require('express');</span>-->
-                        <!--const graphql = require('express-graphql');-->
+                        const NoteType = new GraphQLObjectType({
+                            name: 'Note',
+                            fields: {
+                                id: { type: GraphQLID },
+                                name: { type: GraphQLString },
+                                text: { type: GraphQLString },
+                                comments: {
+                                    type: new GraphQLList(CommentType),
+                                    resolve: parentValue =>
+                                        comments.filter(comment => comment.noteId === parentValue.id)
+                                }
+                            }
+                        });
+                    </code></pre>
+                </section>
 
-                        <!--const schema = require('./schema');-->
+                <section class="center">
+                    <h2 style="font-weight: bold;">Schema</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        const Query = new GraphQLObjectType({
+                            name: 'Query',
+                            fields: {
+                                note: {
+                                    type: NoteType,
+                                    args: {
+                                        name: {
+                                            type: new GraphQLNonNull(GraphQLString)
+                                        }
+                                    },
+                                    resolve: (parentValue, { name }) =>
+                                        notes.find(note => note.name === name)
+                                }
+                            }
+                        });
+                    </code></pre>
+                </section>
 
-                        <!--<span style="opacity: .2;">const server = express();-->
+                <section class="center">
+                    <h2 style="font-weight: bold;">Schema</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        const Mutation = new GraphQLObjectType({
+                            name: 'Mutation',
+                            fields: {
+                                createNote: {
+                                    type: NoteType,
+                                    args: {
+                                        name: new GraphQLNonNull(GraphQLString),
+                                        text: new GraphQLNonNull(GraphQLString)
+                                    },
+                                    resolve: (parentValue, { name, text }) => {
+                                        const note = { name, text };
+                                        notes.push(note);
+                                        return note;
+                                    }
+                                }
+                            }
+                        });
+                    </code></pre>
+                </section>
 
-                        <!--server.use('/graphql', graphql({ schema, graphiql: true }));-->
-
-                        <!--server.listen(4000, () => {-->
-                          <!--console.log('Listening on http://localhost:4000/graphql');-->
-                        <!--});</span>-->
-                    <!--</code></pre>-->
-                <!--</section>-->
-
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">GraphQL Server</h2>-->
-                    <!--<pre><code class="bash" data-trim data-noescape><span class="red">$</span> npm install &#45;&#45;save express express-graphql</code></pre>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
-                        <!--<span style="opacity: .2;">const express = require('express');-->
-                        <!--const graphql = require('express-graphql');-->
-
-                        <!--const schema = require('./schema');-->
-
-                        <!--const server = express();</span>-->
-
-                        <!--server.use('/graphql', graphql({ schema, graphiql: true }));-->
-
-                        <!--<span style="opacity: .2;">server.listen(4000, () => {-->
-                          <!--console.log('Listening on http://localhost:4000/graphql');-->
-                        <!--});</span>-->
-                    <!--</code></pre>-->
-                <!--</section>-->
-
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
-                        <!--const { GraphQLID, GraphQLString, GraphQLObjectType } = require('graphql');-->
-
-                        <!--const UserType = new GraphQLObjectType({-->
-                            <!--name: 'User',-->
-                            <!--fields: {-->
-                                <!--id: { type: GraphQLID },-->
-                                <!--name: { type: GraphQLString }-->
-                            <!--}-->
-                        <!--});-->
-                    <!--</code></pre>-->
-                <!--</section>-->
-
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
-                        <!--const { GraphQLString, GraphQLObjectType } = require('graphql');-->
-
-                        <!--const CommentType = new GraphQLObjectType({-->
-                            <!--name: 'Comment',-->
-                            <!--fields: {-->
-                                <!--text: { type: GraphQLString },-->
-                                <!--author: { type: UserType }-->
-                            <!--}-->
-                        <!--});-->
-                    <!--</code></pre>-->
-                <!--</section>-->
-
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px">-->
-                        <!--const {-->
-                            <!--GraphQLList, GraphQLID, GraphQLString, GraphQLObjectType-->
-                        <!--} = require('graphql');-->
-
-                        <!--const NoteType = new GraphQLObjectType({-->
-                            <!--name: 'Note',-->
-                            <!--fields: {-->
-                                <!--id: { type: GraphQLID },-->
-                                <!--name: { type: GraphQLString },-->
-                                <!--text: { type: GraphQLString },-->
-                                <!--comments: {-->
-                                    <!--type: new GraphQLList(CommentType),-->
-                                    <!--resolve: parentValue =>-->
-                                        <!--comments.filter(comment => comment.noteId === parentValue.id)-->
-                                <!--}-->
-                            <!--}-->
-                        <!--});-->
-                    <!--</code></pre>-->
-                <!--</section>-->
-
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
-                        <!--const Query = new GraphQLObjectType({-->
-                            <!--name: 'Query',-->
-                            <!--fields: {-->
-                                <!--note: {-->
-                                    <!--type: NoteType,-->
-                                    <!--args: {-->
-                                        <!--name: {-->
-                                            <!--type: new GraphQLNonNull(GraphQLString)-->
-                                        <!--}-->
-                                    <!--},-->
-                                    <!--resolve: (parentValue, { name }) =>-->
-                                        <!--notes.find(note => note.name === name)-->
-                                <!--}-->
-                            <!--}-->
-                        <!--});-->
-                    <!--</code></pre>-->
-                <!--</section>-->
-
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
-                        <!--const Mutation = new GraphQLObjectType({-->
-                            <!--name: 'Mutation',-->
-                            <!--fields: {-->
-                                <!--createNote: {-->
-                                    <!--type: NoteType,-->
-                                    <!--args: {-->
-                                        <!--name: new GraphQLNonNull(GraphQLString),-->
-                                        <!--text: new GraphQLNonNull(GraphQLString)-->
-                                    <!--},-->
-                                    <!--resolve: (parentValue, { name, text }) => {-->
-                                        <!--const note = { name, text };-->
-                                        <!--notes.push(note);-->
-                                        <!--return note;-->
-                                    <!--}-->
-                                <!--}-->
-                            <!--}-->
-                        <!--});-->
-                    <!--</code></pre>-->
-                <!--</section>-->
-
-                <!--<section class="center">-->
-                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
-                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
-                        <!--module.export = new GraphQLSchema({-->
-                            <!--query: Query,-->
-                            <!--mutation: Mutation-->
-                        <!--});-->
-                    <!--</code></pre>-->
-                <!--</section>-->
+                <section class="center">
+                    <h2 style="font-weight: bold;">Schema</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        module.export = new GraphQLSchema({
+                            query: Query,
+                            mutation: Mutation
+                        });
+                    </code></pre>
+                </section>
 
                 <section class="center">
                     <h2 style="font-weight: bold;">На практике</h2>
