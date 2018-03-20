@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>GraphQL</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="../reveal/index.min.css">
+        <link rel="stylesheet" href="../reveal/theme.common.css">
+        <link rel="stylesheet" href="../reveal/theme.white.css">
+        <link rel="stylesheet" href="../reveal/theme.black.css">
+        <script src="https://cdn.rawgit.com/pshihn/rough/9be60b1e/dist/rough.min.js"></script>
+    </head>
+    <body class="white">
+        <div class="reveal">
+            <div class="slides">
+
+                <section class="center">
+                    <h1 style="font-size: 150px; display: flex; align-items: center; justify-content: center;"><img
+                            src="./images/graphql-logo.svg" width="300" style="fwbmargin-right: 30px;">GraphQL</h1>
+                    <h2 class="grey" style="font-size: 30px; font-weight: bold;">Максим Воронцов</h2>
+                </section>
+
+                <section class="center">
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="./images/note-with-comments.png" width="433">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <img src="./images/data.svg" width="700">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/required-data.svg" width="700">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">REST</h2>
+                    <pre><code class="graphql" data-trim data-noescape>
+                        /notes/:name
+
+                        <span class="fragment">/notes/:name/comments</span>
+
+                        <span class="fragment"><span class="red">?</span> /notes/:name/comments/authors</span>
+
+                        <span class="fragment"><span class="red">?</span> /users/:id</span>
+
+                        <span class="fragment"><span class="red">?</span> /notes/:name/comments_with_authors</span>
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">REST</h2>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 30px;">
+                        <ul style="list-style: none">
+                            <li class="red">Большое число запросов</li>
+                            <li class="red fragment">Сложности в проектировании при росте зависимостей между
+                                сущностями
+                            </li>
+                            <li class="red fragment">Лишние данные в ответе от сервера</li>
+                            <li class="red fragment">Всегда необходимо помнить об обратной совместимости</li>
+                            <li class="red fragment">Нет удобных инструментов для разработки</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center" data-background-image="./images/graphql.png" data-background-size="800px">
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <p>Язык запросов к API, а так же среда исполнения для этих запросов</p>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 30px;">
+                        <ul style="list-style: none">
+                            <li class="green">Строгая типизация</li>
+                            <li class="green fragment">Получаем только то, что действительно
+                                необходимо
+                            </li>
+                            <li class="green fragment">Возможность получить все необходимые
+                                данные за один запрос
+                            </li>
+                            <li class="green fragment">Отсутствие проблем с обратной
+                                совместимостью и расширением
+                            </li>
+                            <li class="green fragment">Удобные инструменты для разработки</li>
+                            <li class="green fragment">Реализации на всех популярных языках
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/required-data.svg" width="700">
+                    </div>
+                </section>
+
+                <section>
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/data-graph.svg" width="800">
+                    </div>
+                </section>
+
+                <section>
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/data-query-1.svg" width="800">
+                    </div>
+                </section>
+
+                <section>
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/data-query-2.svg" width="800">
+                    </div>
+                </section>
+
+                <section>
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/data-query-3.svg" width="800">
+                    </div>
+                </section>
+
+                <section>
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/data-query-4.svg" width="800">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <pre><code class="graphql" data-trim style="font-size: 20px;">
+                        query {
+                          note(name: "Books") {
+                            name
+                            text
+                            comments {
+                              text
+                              author {
+                                name
+                              }
+                            }
+                          }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">GraphiQL</h2>
+                </section>
+
+                <section class="center" data-background-video="./images/graphiql.mp4" data-background-video-loop
+                         data-background-size="contain">
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Types</h2>
+                    <pre><code class="graphql" style="font-size: 20px;">ID, Int, Float, String, Boolean</code></pre>
+                    <table>
+                        <tr>
+                            <td style="width: 50%;">
+                                <pre><code class="fragment graphql" data-trim data-noescape style="font-size: 20px;">
+                                    type User {
+                                      id: ID
+                                      name: String
+                                    }
+                                </code></pre>
+                            </td>
+                            <td style="width: 50%;">
+                                <div style="display: flex; align-items: center; justify-content: center;">
+                                    <pre><code class="fragment graphql" data-trim style="font-size: 20px;">
+                                    type Comment {
+                                      text: String
+                                      author: User
+                                    }
+                                </code></pre>
+                                </div>
+                            </td>
+                            <td style="width: 50%;">
+                                <pre><code class="fragment graphql" data-trim style="font-size: 20px;" data-noescape>
+                                    type Note {
+                                      name: String
+                                      text: String
+                                      comments: [Comment<span class="hljs-type">]</span>
+                                    }
+                                </code></pre>
+                            </td>
+                        </tr>
+                        <tr class="fragment">
+                            <td></td>
+                            <td style="width: 50%;">
+                                <pre><code class="graphql" data-trim data-noescape style="font-size: 20px;">
+                                    type Query {
+                                        note(name: String!): Note
+                                        notes: [Note<span class="hljs-type">]</span>
+                                    }
+                                </code></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Unions</h2>
+                    <pre><code class="graphql" data-trim style="font-size: 20px;">
+                        type Admin {
+                          id: ID
+                          name: String
+                          accessLevel: String
+                        }
+
+                        type NormalUser {
+                          id: ID
+                          name: String
+                          age: Int
+                        }
+
+                        union User = Admin | NormalUser
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Queries</h2>
+                    <table>
+                        <tr>
+                            <td style="width: 50%">
+                                <pre><code class="graphql" data-trim style="font-size: 20px;">
+                                query {
+                                  note(name: "Books") {
+                                    name
+                                    text
+                                    comments {
+                                      text
+                                    }
+                                  }
+                                }
+                                </code></pre>
+                            </td>
+                            <td style="width: 50%">
+                                <pre class="fragment"><code class="jascript" data-trim style="font-size: 20px;">
+                                    {
+                                      "data": {
+                                        "note": {
+                                          "name": "Books",
+                                          "text": "Books to read",
+                                          "comments": [
+                                            { "text": "Очень круто!" },
+                                            { "text": "А мне не очень понравилось :(" },
+                                            { "text": "Peter, объяснишь почему?" },
+                                          ]
+                                        }
+                                      }
+                                    }
+                                </code></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Queries</h2>
+                    <table>
+                        <tr>
+                            <td style="width: 50%;">
+                                <pre><code class="graphql" data-trim style="font-size: 20px;">
+                                    query {
+                                      note(name: "Books") {
+                                        text
+                                      }
+
+                                      user(id: 1) {
+                                        name
+                                      }
+                                    }
+                                </code></pre>
+                            </td>
+                            <td>
+                                <pre class="fragment"><code class="javascript" data-trim style="font-size: 20px;">
+                                    {
+                                      "data": {
+                                        "note": {
+                                          "text": "Books to read"
+                                        },
+                                        "user": {
+                                          "name": "Max"
+                                        }
+                                      }
+                                    }
+                                </code></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Aliases</h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <pre><code class="graphql" data-trim style="font-size: 20px;">
+                                    query {
+                                      firstNote: note(name: "Books") {
+                                        text
+                                      }
+
+                                      secondNote: note(name: "Films") {
+                                        text
+                                      }
+                                    }
+                                </code></pre>
+                            </td>
+                            <td>
+                                <pre class="fragment"><code class="javascript" data-trim style="font-size: 20px;">
+                                    {
+                                      "data": {
+                                        "firstNote": {
+                                          "text": "Books to read"
+                                        },
+                                        "secondNote": {
+                                          "text": "Films to watch"
+                                        },
+                                      }
+                                    }
+                                </code></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Named Queries</h2>
+                    <pre><code class="graphql" data-trim style="font-size: 20px;">
+                        query NotesQuery {
+                          firstNote: note(name: "Books") {
+                            text
+                          }
+
+                          secondNote: note(name: "Films") {
+                            text
+                          }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Fragments</h2>
+                    <pre><code class="graphql" data-trim style="font-size: 20px;">
+                        fragment NoteFields on Note {
+                            id
+                            name
+                            text
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Fragments</h2>
+                    <pre><code class="graphql" data-trim style="font-size: 20px;">
+                        query {
+                            firstNote: note(name: "Books") {
+                                ...NoteFields
+                            }
+
+                            secondNote: note(name: "Films") {
+                                ...NoteFields
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Inline fragments</h2>
+                    <pre><code class="grapqhl" data-trim data-noescape style="font-size: 20px;">
+                        query {
+                          users {
+                            <span class="fragment">__typename</span>
+
+                            ... on Admin {
+                              name
+                              accessLevel
+                            }
+
+                            ... on NormalUser {
+                              name
+                              age
+                            }
+                          }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Variables</h2>
+                    <pre><code class="graphql" data-trim style="font-size: 20px;">
+                        query NoteQuery($name: String!) {
+                          note(name: $name) {
+                            name
+                            text
+                          }
+                        }
+                    </code></pre>
+                    <pre class="fragment"><code class="javascript" data-trim style="font-size: 20px;">
+                        // Variables
+
+                        { "name": "Books" }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Directives</h2>
+                    <pre><code class="graphql" data-trim data-noescape style="font-size: 20px;">
+                        query NoteQuery($name: String!, $withComments: Boolean!) {
+                          note(name: $name) {
+                            name
+                            text
+                            comments @include(if: $withComments) {
+                              text
+                            }
+                          }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Directives</h2>
+                    <pre><code class="graphql" data-trim data-noescape style="font-size: 20px;">
+                        query NoteQuery($name: String!, $withoutComments: Boolean!) {
+                          note(name: $name) {
+                            name
+                            text
+                            comments @skip(if: $withoutComments) {
+                              text
+                            }
+                          }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Mutations</h2>
+                    <pre><code class="grahpql" data-trim data-noescape style="font-size: 24px;">
+                        mutation CreateNote($name: String!, $text: String!) {
+                          createNote(name: $name, text: $text) {
+                            name
+                            text
+                          }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <div style="text-align: center;">
+                        <img src="./images/graphql+nodejs.png">
+                    </div>
+                    <h2 style="font-weight: bold; font-family: sourcecodepro-light">GraphQL + Node.js</h2>
+                    <p class="fragment"><a href="https://github.com/graphql/graphql-js/" target="_blank">graphql.js</a>
+                    </p>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Делаем простой запрос</h2>
+                    <pre><code class="bash" data-trim data-noescape style="font-size: 20px;">
+                        <span class="red">$</span> npm install --save graphql
+                    </code></pre>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        <span class="fragment">const { graphql, buildSchema } = require('graphql');</span>
+                        <span class="fragment">const notes = [
+                            { name: 'Films', text: 'Films to watch' },
+                            { name: 'Books', text: 'Books to read' }
+                        ];</span>
+                        <span class="fragment">const schema = buildSchema(`
+                            type Note {
+                              name: String
+                              text: String
+                            }
+
+                            type Query {
+                              note(name: String!): Note
+                            }
+                        `);</span>
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Делаем простой запрос</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        const resolvers = {
+                            note: args => notes.find(note => note.name === args.name)
+                        };
+
+                        <span class="fragment">const query = `
+                            query {
+                              note(name: "Books") {
+                                text
+                              }
+                            }
+                        `;</span>
+
+                        <span class="fragment">graphql(schema, query, resolvers).then(response => {
+                          // { data: { note: { text: "Books to read" } } }
+                        });</span>
+            </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Mutations</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        const schema = buildSchema(`
+                            type Note {
+                              name: String
+                              text: String
+                            }
+
+                            type Mutation {
+                              createNote(name: String!, text: String!): Note
+                            }
+                        `);
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Mutations</h2>
+                    <pre><code class="javascript" data-noescape data-trim style="font-size: 20px;">
+                        const resolvers = {
+                            createNote: args => {
+                                const note = { name: args.name, text: args.text };
+
+                                notes.push(note);
+
+                                return note;
+                            }
+                        };
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Mutations</h2>
+                    <pre><code class="javascript" data-noescape data-trim style="font-size: 20px;">
+                        const mutation = `
+                            mutation {
+                              createNote(name: "Music", text: "Music to listen") {
+                                name
+                                text
+                              }
+                            }
+                        `;
+
+                        graphql(schema, mutation, resolvers).then(response => {
+                            // {"data": { "createNote": { "name": "Music", "text": "Music to listen" }}}
+                        });
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">GraphQL Server</h2>
+                </section>
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">GraphQL Server</h2>-->
+                    <!--<pre><code class="bash" data-trim data-noescape><span class="red">$</span> npm install &#45;&#45;save express express-graphql</code></pre>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
+                        <!--const express = require('express');-->
+                        <!--const graphql = require('express-graphql');-->
+
+                        <!--const schema = require('./schema');-->
+
+                        <!--const server = express();-->
+
+                        <!--server.use('/graphql', graphql({ schema, graphiql: true }));-->
+
+                        <!--server.listen(4000, () => {-->
+                          <!--console.log('Listening on http://localhost:4000/graphql');-->
+                        <!--});-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">GraphQL Server</h2>-->
+                    <!--<pre><code class="bash" data-trim data-noescape><span class="red">$</span> npm install &#45;&#45;save express express-graphql</code></pre>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
+                        <!--const express = require('express');-->
+                        <!--<span style="opacity: .2">const graphql = require('express-graphql');-->
+
+                        <!--const schema = require('./schema');</span>-->
+
+                        <!--const server = express();-->
+
+                        <!--<span style="opacity: .2;">server.use('/graphql', graphql({ schema, graphiql: true }));</span>-->
+
+                        <!--server.listen(4000, () => {-->
+                          <!--console.log('Listening on http://localhost:4000/graphql');-->
+                        <!--});-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">GraphQL Server</h2>-->
+                    <!--<pre><code class="bash" data-trim data-noescape><span class="red">$</span> npm install &#45;&#45;save express express-graphql</code></pre>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
+                        <!--<span style="opacity: .2;">const express = require('express');</span>-->
+                        <!--const graphql = require('express-graphql');-->
+
+                        <!--const schema = require('./schema');-->
+
+                        <!--<span style="opacity: .2;">const server = express();-->
+
+                        <!--server.use('/graphql', graphql({ schema, graphiql: true }));-->
+
+                        <!--server.listen(4000, () => {-->
+                          <!--console.log('Listening on http://localhost:4000/graphql');-->
+                        <!--});</span>-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">GraphQL Server</h2>-->
+                    <!--<pre><code class="bash" data-trim data-noescape><span class="red">$</span> npm install &#45;&#45;save express express-graphql</code></pre>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
+                        <!--<span style="opacity: .2;">const express = require('express');-->
+                        <!--const graphql = require('express-graphql');-->
+
+                        <!--const schema = require('./schema');-->
+
+                        <!--const server = express();</span>-->
+
+                        <!--server.use('/graphql', graphql({ schema, graphiql: true }));-->
+
+                        <!--<span style="opacity: .2;">server.listen(4000, () => {-->
+                          <!--console.log('Listening on http://localhost:4000/graphql');-->
+                        <!--});</span>-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
+                        <!--const { GraphQLID, GraphQLString, GraphQLObjectType } = require('graphql');-->
+
+                        <!--const UserType = new GraphQLObjectType({-->
+                            <!--name: 'User',-->
+                            <!--fields: {-->
+                                <!--id: { type: GraphQLID },-->
+                                <!--name: { type: GraphQLString }-->
+                            <!--}-->
+                        <!--});-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
+                        <!--const { GraphQLString, GraphQLObjectType } = require('graphql');-->
+
+                        <!--const CommentType = new GraphQLObjectType({-->
+                            <!--name: 'Comment',-->
+                            <!--fields: {-->
+                                <!--text: { type: GraphQLString },-->
+                                <!--author: { type: UserType }-->
+                            <!--}-->
+                        <!--});-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px">-->
+                        <!--const {-->
+                            <!--GraphQLList, GraphQLID, GraphQLString, GraphQLObjectType-->
+                        <!--} = require('graphql');-->
+
+                        <!--const NoteType = new GraphQLObjectType({-->
+                            <!--name: 'Note',-->
+                            <!--fields: {-->
+                                <!--id: { type: GraphQLID },-->
+                                <!--name: { type: GraphQLString },-->
+                                <!--text: { type: GraphQLString },-->
+                                <!--comments: {-->
+                                    <!--type: new GraphQLList(CommentType),-->
+                                    <!--resolve: parentValue =>-->
+                                        <!--comments.filter(comment => comment.noteId === parentValue.id)-->
+                                <!--}-->
+                            <!--}-->
+                        <!--});-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
+                        <!--const Query = new GraphQLObjectType({-->
+                            <!--name: 'Query',-->
+                            <!--fields: {-->
+                                <!--note: {-->
+                                    <!--type: NoteType,-->
+                                    <!--args: {-->
+                                        <!--name: {-->
+                                            <!--type: new GraphQLNonNull(GraphQLString)-->
+                                        <!--}-->
+                                    <!--},-->
+                                    <!--resolve: (parentValue, { name }) =>-->
+                                        <!--notes.find(note => note.name === name)-->
+                                <!--}-->
+                            <!--}-->
+                        <!--});-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
+                        <!--const Mutation = new GraphQLObjectType({-->
+                            <!--name: 'Mutation',-->
+                            <!--fields: {-->
+                                <!--createNote: {-->
+                                    <!--type: NoteType,-->
+                                    <!--args: {-->
+                                        <!--name: new GraphQLNonNull(GraphQLString),-->
+                                        <!--text: new GraphQLNonNull(GraphQLString)-->
+                                    <!--},-->
+                                    <!--resolve: (parentValue, { name, text }) => {-->
+                                        <!--const note = { name, text };-->
+                                        <!--notes.push(note);-->
+                                        <!--return note;-->
+                                    <!--}-->
+                                <!--}-->
+                            <!--}-->
+                        <!--});-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <!--<section class="center">-->
+                    <!--<h2 style="font-weight: bold;">Schema</h2>-->
+                    <!--<pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">-->
+                        <!--module.export = new GraphQLSchema({-->
+                            <!--query: Query,-->
+                            <!--mutation: Mutation-->
+                        <!--});-->
+                    <!--</code></pre>-->
+                <!--</section>-->
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">На практике</h2>
+                    <div style="display: flex; justify-content: center;align-items: center;">
+                        <img src="./images/practical-graphql.svg" width="800">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Errors</h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <pre><code class="graphql" data-trim data-noescape style="font-size: 20px;">
+                                    query {
+                                      note(name: "Books") {
+                                        name
+                                        createdAt
+                                      }
+                                    }
+                                </code></pre>
+                            </td>
+                            <td>
+                                <pre><code class="javascript" style="font-size: 17px" data-trim data-noescape>
+                                    {
+                                      "errors": [
+                                        {
+                                          "message": "Cannot query field \"createdAt\" on type \"Note\".",
+                                          "locations": [
+                                            {
+                                              "line": 4,
+                                              "column": 5
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                </code></pre>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Errors</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        {
+                          "data": null,
+                          "errors": [
+                            {
+                              "code": "UNQ",
+                              "message": "Fields must be unique",
+                              "details": {
+                                "fields": [
+                                  "name"
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <div style="display: flex; justify-content: center; align-items: center; font-size: 30px;">
+                        <ul style="list-style: none">
+                            <li class="red">Новая технология</li>
+                            <li class="red fragment">Мало паттернов</li>
+                            <li class="red fragment">Сложности при работе с SQL базами данных</li>
+                            <li class="red fragment">Сложности при работе с реактивными данными</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">GraphQL Клиенты</h2>
+                    <table style="font-size: 30px; border-collapse: collapse">
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: bold;">Lokka</td>
+                                <td>Максимально простой в использовании. Базовая поддержка запросов и мутаций.
+                                    Простейшее
+                                    кэширование
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Apollo</td>
+                                <td>Более гибкий. Хороший баланс между функциональностью и сложностью использования</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Relay</td>
+                                <td>Наиболее функциональный, из-за чего наиболее сложный в использовании. Много внимания
+                                    уделено
+                                    производительности (особенно на мобильных).
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="center">
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="./images/graphql+react+apollo.png">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Создаем Apollo Client</h2>
+                    <pre><code class="bash" data-trim data-noescape style="font-size: 20px;">
+                        <span class=red>$</span> npm install --save react-apollo apollo-client-preset graphql-tag graphql
+                    </code></pre>
+                    <pre><code class="javascript fragment" data-trim data-noescape style="font-size: 20px;">
+                        import React from 'react';
+                        import ReactDOM from 'react-dom';
+                        import { ApolloProvider } from 'react-apollo';
+                        import ApolloClient from 'apollo-client-preset';
+
+                        const client = new ApolloClient();
+
+                        ReactDOM.render(
+                            &lt;ApolloProvider client={client}>
+                                &lt;Note name="Books" />
+                            &lt;/ApolloProvider>,
+                            document.getElementById(<span class="hljs-string">'root'</span>)
+                        );
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Queries</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        import gql from 'graphql-tag';
+
+                        const query = gql`
+                            query Note($name: String!) {
+                              note(name: $name) {
+                                name
+                                text
+                              }
+                            }
+                        `;</span>
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Higher-Order Components</h2>
+                    <pre><code class="fragment javascript" data-trim data-noescape style="font-size: 20px;">
+                        function logProps(WrappedComponent) {
+                            return class extends React.Component {
+                                static getDerivedStateFromProps(nextProps) {
+                                    console.log('Current props: ', this.props);
+                                    console.log('Next props: ', nextProps);
+
+                                    return null;
+                                }
+
+                                render() {
+                                  return &lt;WrappedComponent {...this.props} />;
+                                }
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Queries</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        import React from 'react';
+                        import { graphql } from 'react-apollo';
+
+                        function Note({ data }) {
+                            return (
+                                &lt;React.Fragment&gt;
+                                    &lt;h1&gt;{data.name}&lt;/h1&gt;
+                                    &lt;p&gt;{data.text}&lt;/p&gt;
+                                &lt;/React.Fragment&gt;
+                            );
+                        }
+
+                        export default graphql(query, {
+                            options: props => ({ variables: { name: props.name } })
+                        })(Note);
+                    </code></pre>
+                    <p class="red fragment" style="font-size: 30px;"><span
+                            style="font-weight: bold;">Uncaught TypeError</span>: Cannot read property <span
+                            style="font-weight: bold;">name</span> of undefined</p>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Queries</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        function Note({ data }) {
+                            if (data.loading) {
+                                return 'Loading...';
+                            }
+
+                            return (
+                                &lt;React.Fragment&gt;
+                                    &lt;h1&gt;{data.name}&lt;/h1&gt;
+                                    &lt;p&gt;{data.text}&lt;/p&gt;
+                                &lt;/React.Fragment&gt;
+                            );
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <div style="display: flex; justify-content: center;align-items: center;">
+                        <img src="../07-react/images/first-component.png" width="400">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Mutations</h2>
+                    <pre><code class="language-javascript" data-trim data-noescape style="font-size: 19px;">
+                        class Form extends React.Component {
+                            state = { name: '', text: '' }
+
+                            handleSubmit = () => this.makeSomeApiRequest(this.state.name, this.state.text)
+                            handleNameChange = event => this.setState({ name: event.target.value })
+                            handleTextChange = event => this.setState({ text: event.target.value })
+
+                            render() {
+                                const { name, text } = this.state;
+
+                                return (
+                                    &lt;<span class="hljs-name">div</span>>
+                                        &lt;<span class="hljs-name">input</span> <span
+                            class="hljs-attr">value</span>={name} <span class="hljs-attr">onChange</span>={<span
+                            class="hljs-keyword">this</span>.handleNameChange} />
+                                        &lt;<span class="hljs-name">textarea</span> <span
+                            class="hljs-attr">value</span>={text} <span class="hljs-attr">onChange</span>={<span
+                            class="hljs-keyword">this</span>.handleTextChange} />
+                                        &lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>={<span
+                            class="hljs-keyword">this</span>.handleSubmit}>
+                                            Отправить
+                                        &lt;<span class="hljs-name">button</span>>
+                                    &lt;/<span class="hljs-name">div</span>>
+                                );
+                            }
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Mutations</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        const mutation = gql`
+                            mutation CreateNote($name: String!, $text: String!) {
+                              createNote(name: $name, text: $text) {
+                                id
+                              }
+                            }
+                        `;
+
+                        export default graphql(mutation)(Form);
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Mutations</h2>
+                    <pre><code class="language-javascript" data-trim data-noescape style="font-size: 20px;">
+                        class Form extends React.Component {
+                            ...
+
+                            handleSubmit = () => {
+                                const { mutate } = this.props;
+                                const { name, text } = this.state;
+
+                                mutate({ variables: { name, text } })
+                                    .then(() => { ... })
+                                    .catch(() => { ... })
+                            }
+
+                            ...
+                        }
+                    </code></pre>
+                </section>
+
+                <section data-background-video="./images/mutation-without-refetch.mp4"
+                         data-background-size="contain"></section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Cache</h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <ol style="font-size: 30px;">
+                                    <li>Получили список всех заметок</li>
+                                    <li>Создали новую заметку</li>
+                                    <li>Перешли на страницу со всеми заметками</li>
+                                </ol>
+                            </td>
+                            <td style="font-size: 30px">
+                                <ol>
+                                    <li>Создали заметку</li>
+                                    <li>Перешли на страницу со всеми заметками</li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Cache</h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <ol style="font-size: 30px;">
+                                    <li class="red">Получили список всех заметок</li>
+                                    <li class="red">Создали новую заметку</li>
+                                    <li class="red">Перешли на страницу со всеми заметками</li>
+                                </ol>
+                            </td>
+                            <td style="font-size: 30px">
+                                <ol>
+                                    <li class="green">Создали заметку</li>
+                                    <li class="green">Перешли на страницу со всеми заметками</li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+
+                <section class="center">
+                    <h2>Cache</h2>
+                    <pre><code class="language-javascript" data-trim data-noescape style="font-size: 20px;">
+                        class Form extends React.Component {
+                            ...
+
+                            handleSubmit = () => {
+                                const { mutate } = this.props;
+                                const { name, text } = this.state;
+
+                                mutate({
+                                    variables: { name, text },
+                                    refetchQueries: ['Notes']
+                                })
+                                    .then(() => { ... })
+                                    .catch(() => { ... })
+                            }
+
+                            ...
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <div style="display: flex; justify-content: center;align-items: center;">
+                        <img src="./images/query+mutation.png" width="700">
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">compose</h2>
+                    <pre><code class="javascript" data-trim data-noescape style="font-size: 20px;">
+                        export default graphql(createNoteMutation)(graphql(notesQuery))(IndexPage));
+
+                                                            <span class="red" style="font-size: 30px;">):</span>
+
+                        <span class="fragment">import { compose } from 'react-apollo';
+
+                        // compose(f, g, h)(x) === f(g(h(x)))
+
+                        compose(
+                            graphql(createNoteMutation),
+                            graphql(notesQuery)
+                        )(IndexPage);
+                                                            <span class="green"
+                                                                  style="font-size: 30px;">(:</span></span>
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">React + Apollo</h2>
+                    <div style="display: flex; justify-content: center; align-items: center; font-size: 30px;">
+                        <ul style="list-style: none; text-align: center;">
+                            <li class="green">Простота использования</li>
+                            <li class="green fragment">Активная поддержка и развитие</li>
+                            <li class="green fragment">Гибкая настройка кэширования</li>
+                            <li class="green fragment">Поддержка fragments</li>
+                            <li class="green fragment">Optimistic Updates</li>
+                            <li class="green fragment">Polling</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">GraphQL</h2>
+                    <div style="text-align: center; margin: 20px 0; font-size: 40px;">
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="http://facebook.github.io/graphql/">GraphQL Specification</a><br>
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="https://github.com/graphql/graphql-js">GraphQL.js</a><br>
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="http://graphql.org/learn/best-practices/">GraphQL Best Practices</a>
+                    </div>
+                    <h2 style="font-weight: bold;">GraphQL Clients</h2>
+                    <div style="text-align: center; margin: 20px 0; font-size: 40px;">
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="https://github.com/kadirahq/lokka">Lokka</a><br>
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="http://dev.apollodata.com">Apollo</a><br>
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="https://facebook.github.io/relay/">Relay</a>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+        <script src="../reveal/index.min.js"></script>
+        <script>hljs.registerLanguage("graphql", function (e) {
+            return {
+                aliases: ["gql"],
+                k: {
+                    keyword: "query mutation subscription|10 type interface union scalar fragment|10 enum on ...",
+                    literal: "true false null"
+                },
+                c: [e.HCM, e.QSM, e.NM, { cN: "type", b: "([^\\w][A-Z][a-z]|ID)", e: "\\W", eE: !0 }, {
+                    cN: "literal",
+                    b: "[^\\w][A-Z][A-Z]",
+                    e: "\\W",
+                    eE: !0
+                }, { cN: "variable", b: "\\$", e: "\\W", eE: !0 }, {
+                    cN: "keyword",
+                    b: "[.]{2}",
+                    e: "\\."
+                }, { cN: "meta", b: "@", e: "\\W", eE: !0 }],
+                i: /([;<']|BEGIN)/
+            }
+        });</script>
+    </body>
+</html>
