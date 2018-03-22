@@ -8,6 +8,7 @@
 1. Браузер и JS ([слайды](http://urfu-2017.github.io/webdev-slides/06-browser-and-js/lection/index.html))
 1. React ([слайды](http://urfu-2017.github.io/webdev-slides/07-react/index.html))
 1. Клиент-сервер (GraphQL, React & Apollo) ([слайды](http://urfu-2017.github.io/webdev-slides/08-client-server/index.html))
+1. Touch (@media, @supports, amp, турбо) ([слайды](http://urfu-2017.github.io/webdev-slides/09-touch/index.html))
 
 ## Хакатоны
 
