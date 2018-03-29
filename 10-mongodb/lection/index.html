@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>MongoDB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="../css/reveal.css">
+    <link rel="stylesheet" href="../css/theme/yandex.css" id="theme">
+    <link rel="stylesheet" href="../lib/css/zenburn.css">
+    <link rel="stylesheet" href="./css/user.css">
+</head>
+<body class="yandex nodejs"><div class="reveal"><div class="slides">
+
+<section class="large">
+    <h3>Базы данных</h3>
+    <h3>MongoDB</h3>
+    <p class="author">
+        <small>Наталья Аксёнова</small>
+    </p>
+</section>
+<section>
+    <section data-transition="fade-in none-out">
+        <ol>
+            <li>Frontend</li>
+            <li>Backend</li>
+            <li>????</li>
+            <li>PROFIT!!!</li>
+        </ol>
+    </section>
+    <section data-transition="fade-in fade-out">
+        <ol>
+            <li>Frontend</li>
+            <li>Backend</li>
+            <li>Database</li>
+            <li>PROFIT!!!</li>
+        </ol>
+    </section>
+    <section>
+        <h2>CAP теорема</h2>
+    </section>
+    <section>
+        <blockquote cite="https://ru.wikipedia.org/wiki/Теорема_CAP" style="width: 85%;">
+            Теорема CAP - эвристическое утверждение о том, что в любой реализации распределённого хранения возможно обеспечить не более двух из трёх следующих свойств: согласованность данных, доступность, устойчивость к разделению.
+        </blockquote>
+    </section>
+
+    <section>
+        <h3>Cогласованность данных</h3>
+
+        <blockquote cite="https://ru.wikipedia.org/wiki/Теорема_CAP">
+            (англ. consistency) — во всех узлах системы в один момент времени данные не противоречат друг другу
+        </blockquote>
+    </section>
+
+    <section>
+        <h3>Доступность</h3>
+
+        <blockquote cite="https://ru.wikipedia.org/wiki/Теорема_CAP">
+            (англ. availability) — каждый клиент всегда может читать и писать, если жив хотя бы один узел системы
+        </blockquote>
+    </section>
+
+    <section>
+        <h3>Устойчивость к разделению</h3>
+
+        <blockquote cite="https://ru.wikipedia.org/wiki/Теорема_CAP">
+            (англ. partition tolerance) — расщепление распределенной системы на несколько изолированных секций не приводит к некорректности отклика каждой из секций
+        </blockquote>
+    </section>
+
+    <section data-background='images/cap.png' data-background-size='contain'>
+    </section>
+    <section data-transition="fade-in none-out">
+        <h3>SQL</h3>
+        <img src="images/g7K2e.jpg" width="600">
+    </section>
+    <section data-transition="fade-in fade-out">
+        <h3>SQL</h3>
+        <img src="images/893533a3625e5f1f0e2f5641cd0f12e2.jpg">
+    </section>
+    <section>
+        <h3>NoSQL</h3>
+    </section>
+    <section>
+        <table>
+            <tr>
+                <td>Frontend</td>
+                <td>Backend</td>
+                <td>Database</td>
+            </tr>
+            <tr>
+                <td class="fragment">Javascript</td>
+                <td class="fragment">Javascript</td>
+                <td class="fragment">Javascript</td>
+            </tr>
+        </table>
+    </section>
+</section>
+
+<section>
+    <section>
+        <img src="images/MongoDB_Gray_Logo_FullColor_RGB-01.jpg">
+    </section>
+    <section>
+        <h3>MongoDB</h3>
+        <div>Документо-ориентированная база данных</div>
+        <div>Данные хранятся в JSON-подобном формате (BSON)</div>
+        <div>Для запросов используется Javascript</div>
+        <div>Схема для данных необязательна</div>
+    </section>
+    <section>
+        <h4>Установка</h4>
+        <a href="https://www.mongodb.com/download-center#community">https://www.mongodb.com/download-center#community</a>
+    </section>
+    <section>
+        <h2>База данных для приложения "Заметки"</h2>
+    </section>
+    <section>
+            <h3>CRUD</h3>
+        <ul>
+            <li>Create</li>
+            <li>Read</li>
+            <li>Update</li>
+            <li>Delete</li>
+        </ul>
+    </section>
+    <section>
+        <h4>Create. Одна запись</h4>
+        <pre><code class="hljs javascript size-XS">db.notes.insert({
+    name: 'Films',
+    text: 'My films',
+    owner: 'Наталья'
+})
+</code></pre>
+    </section>
+    <section>
+        <h4>Create. Несколько записей</h4>
+    <pre><code class="hljs javascript">db.notes.insert([
+    {
+        name: 'Заметка без владельца',
+        text: 'Чья это заметка?'
+    },
+    {
+        name: 1,
+        owner: 'Наталья'
+    },
+    {
+        some: 'field'
+    }
+])</code></pre>
+        <p class="fragment" style="font-size: 80px;">📄  🤷  ❓</p>
+    </section>
+    <section>
+        <img src="images/trash.png">
+    </section>
+    <section>
+        <h4>Валидация документов в коллекции</h4>
+        <pre><code class="hljs javascript size-XXS">db.createCollection("notes", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["name", "owner"],
+            properties: {
+                name: { bsonType: "string", description: "Note title" },
+                text: { bsonType: "string", description: "Note text" },
+                owner: {
+                    anyOf: [
+                        { bsonType: "string" },
+                        { bsonType: "array", items: { bsonType: "string" } }
+                    ],
+                    description: "Name of owner"
+                }
+}}}})</code></pre>
+    </section>
+    <section>
+        <h4>Create. Успешное добавление</h4>
+        <pre style="margin-bottom: 30px;"><code class="hljs javascript">db.notes.insert(
+    { name: 'Films', text: 'My films', owner: 'Наталья' }
+)</code></pre>
+        <pre class="fragment"><code class="hljs javascript">// WriteResult({ "nInserted" : 1 })</code></pre>
+    </section>
+    <section>
+        <h4>Create. Дополнительные поля</h4>
+        <pre style="margin-bottom: 30px;"><code class="hljs javascript">db.notes.insert({
+    name: 'Books',
+    owner: 'Наталья',
+    version: 2
+})</code></pre>
+        <pre class="fragment"><code class="hljs javascript">// WriteResult({ "nInserted" : 1 })</code></pre>
+    </section>
+    <section>
+        <h4>Create. Ошибка валидации</h4>
+        <pre style="margin-bottom: 30px;"><code class="hljs javascript">db.notes.insert({ name: 1, owner: 'Наталья' })</code></pre>
+        <pre class="fragment"><code class="hljs bash">WriteResult({
+	"nInserted" : 0,
+	"writeError" : {
+		"code" : 121,
+		"errmsg" : "Document failed validation"
+	}
+})</code></pre>
+    </section>
+
+    <section>
+        <h4>Read. Все документы</h4>
+<pre style="margin-bottom: 10px;"><code class="hljs javascript">db.notes.find()</code></pre>
+<pre class="fragment"><code class="hljs javascript">{ "_id" : ObjectId("5ab77143f92855790b23a184"), "name" : "Films", "text" : "my films", "owner" : "Наталья" }
+{ "_id" : ObjectId("5ab77159f92855790b23a185"), "name" : "Books", "owner" : "Наталья", "version" : 2 }</code></pre>
+    </section>
+    <section>
+        <h4>Read. Pretty</h4>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript">db.notes.find().pretty()</code></pre>
+        <pre class="fragment"><code class="hljs javascript">{
+    "_id" : ObjectId("5ab77143f92855790b23a184"),
+    "name" : "Films",
+    "text" : "My films",
+    "owner" : "Наталья"
+}
+{
+    "_id" : ObjectId("5ab77159f92855790b23a185"),
+    "name" : "Books",
+    "owner" : "Наталья",
+    "version": 2
+}</code></pre>
+    </section>
+    <section>
+        <h4>Read. Получение массива</h4>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript">db.notes.find().toArray()</code></pre>
+        <pre><code class="hljs javascript">[
+    {
+        "_id" : ObjectId("5ab77143f92855790b23a184"),
+        "name" : "Films",
+        "text" : "my films",
+        "owner" : "Наталья"
+    },
+    {
+        "_id" : ObjectId("5ab77159f92855790b23a185"),
+        "name" : "Books",
+        "owner" : "Наталья",
+        "version": 2
+    }
+]</code></pre>
+    </section>
+    <section>
+        <p>ObjectId("5ab77143f92855790b23a184")</p>
+        <table>
+            <tr>
+                <td>4 байта</td>
+                <td>timestamp</td>
+            </tr>
+            <tr>
+                <td>3 байта</td>
+                <td>mid</td>
+            </tr>
+            <tr>
+                <td>2 байта</td>
+                <td>pid</td>
+            </tr>
+            <tr>
+                <td>3 байта</td>
+                <td>inc</td>
+            </tr>
+        </table>
+    </section>
+    <section>
+        <h4>Read. Find</h4>
+<pre><code class="hljs javascript size-XS">db.collection.find(query, projection)</code></pre>
+        <div>
+            <ul>
+                <li>query - задает фильтры для выборки. Если не задан, возвращает все записи коллекции</li>
+                <li>projection - задает возвращаемые поля. Если не задан, возвращает все поля</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h4>Read. Query</h4>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript">db.notes.find({ name: 'Films' })</code></pre>
+        <pre class="fragment"><code class="hljs javascript">{
+    "_id" : ObjectId("5ab77143f92855790b23a184"),
+    "name" : "Films",
+    "text" : "My films",
+    "owner" : "Наталья"
+}
+        </code></pre>
+    </section>
+    <section>
+        <h4>Read. Projection</h4>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript">db.notes.find({ owner: 'Наталья' }, { name: 1 })</code></pre>
+        <pre class="fragment"><code class="hljs javascript">{
+    "_id" : ObjectId("5ab77143f92855790b23a184"),
+    "name" : "Films"
+}
+{
+    "_id" : ObjectId("5ab77159f92855790b23a185"),
+    "name" : "Books"
+}</code></pre>
+    </section>
+    <section>
+        <h4>Read. Projection. Исключение полей</h4>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript">db.notes.find({ owner: 'Наталья' }, { name: 1, _id: 0 })</code></pre>
+        <pre class="fragment"><code class="hljs javascript">{
+    "name" : "Films"
+}
+{
+    "name" : "Books"
+}</code></pre>
+    </section>
+    <section>
+        <h4>Read. Операторы</h4>
+        <pre><code class="hljs javascript">db.notes.find({
+    version: { $gte: 2 }
+})</code></pre>
+        <a href="https://docs.mongodb.com/manual/reference/operator/query/">Список операторов</a>
+    </section>
+
+    <section>
+        <h4>Read. Регулярные выражения</h4>
+        <pre><code class="hljs javascript">db.notes.find({
+    text: { $regex: /^my/i}
+})</code></pre>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript">db.notes.find({
+    text: /^my/i
+})</code></pre>
+        <pre class="fragment"><code>{
+    "_id" : ObjectId("5ab77143f92855790b23a184"),
+    "name" : "Films",
+    "text" : "My films",
+    "owner" : "Наталья"
+}</code></pre>
+        <a href="https://docs.mongodb.com/manual/reference/operator/query/regex/">Поиск по регулярным выражениям</a>
+    </section>
+    <section>
+        <h4>Read. Поиск по массиву</h4>
+        <pre><code class="hljs javascript">{
+    "name" : "Books",
+    "owner" : "Наталья"
+}
+{
+    "name" : "Films for party",
+    "owner" : [ "Наталья", "Анна" ]
+}
+{
+    "name" : "Music",
+    "owner" : "Вася"
+}</code></pre>
+    </section>
+    <section>
+        <h4>Read. Поиск по массиву</h4>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript">db.notes.find(
+    { owner: 'Наталья' },
+    { _id: 0, name: 1, owner: 1 }
+)</code></pre>
+        <pre class="fragment"><code class="hljs javascript">{
+    "name" : "Books",
+    "owner" : "Наталья"
+}
+{
+    "name" : "Films for party",
+    "owner" : [ "Наталья", "Анна" ]
+}</code></pre>
+    </section>
+    <section>
+        <h4>Read. Поиск по вложенным документам</h4>
+        <pre style="margin-bottom: 20px;"><code class="hljs javascript">db.notes.find({
+    'score.likes': { $gte: 1 }
+})</code></pre>
+        <pre style="margin-bottom: 10px;"><code>{
+    name: 'Films',
+    owner: 'Наталья',
+    score: {
+        likes: 10,
+        dislikes: 2
+    }
+}</code></pre>
+    </section>
+    <section>
+        <h4>Read. Sort, skip, limit</h4>
+        <pre style="margin-bottom: 15px;"><code>db.notes.find({}, { _id: 0, owner: 1, name: 1 })</code></pre>
+        <pre><code>{ "name" : "Music", "owner" : "Вася" }
+{ "name" : "Films", "owner" : "Наталья" }
+{
+    "name" : "Films for party",
+    "owner" : [ "Наталья", "Анна" ]
+}
+{ "name" : "Books", "owner" : "Наталья" }</code></pre>
+    </section>
+    <section>
+        <h4>Read. Sort</h4>
+        <pre style="margin-bottom: 15px;"><code>db.notes
+    .find({}, { _id: 0, name: 1, owner: 1 })
+    .sort({ name: 1 })</code></pre>
+        <pre class="fragment"><code>{ "name" : "Books", "owner" : "Наталья" }
+{ "name" : "Films", "owner" : "Наталья" }
+{ "name" : "Films for party", "owner" : [ "Наталья", "Анна" ] }
+{ "name" : "Music", "owner" : "Вася" }</code></pre>
+    </section>
+    <section>
+        <h4>Read. Limit</h4>
+        <pre style="margin-bottom: 15px;"><code>db.notes
+    .find({}, { _id: 0, name: 1, owner: 1 })
+    .limit(2)</code></pre>
+        <pre class="fragment"><code>{ "name" : "Films", "owner" : "Наталья" }
+{ "name" : "Books", "owner" : "Наталья" }</code></pre>
+    </section>
+    <section>
+        <h4>Read. Skip</h4>
+        <pre style="margin-bottom: 15px;"><code>db.notes
+    .find({}, { _id: 0, name: 1, owner: 1 })
+    .skip(2)</code></pre>
+        <pre class="fragment"><code>{
+    "name" : "Films for party",
+    "owner" : [ "Наталья", "Анна" ]
+}
+{
+    "name" : "Music",
+    "owner" : "Вася"
+}</code></pre>
+    </section>
+    <section>
+        <h4>Read. Sort-skip-limit</h4>
+        <pre style="margin-bottom: 10px;"><code>db.notes
+    .find({}, { _id: 0, name: 1, owner: 1 })
+    .sort({ name: 1 })
+    .skip(2)
+    .limit(1)</code></pre>
+        <pre class="fragment"><code>{
+    "name" : "Films for party",
+    "owner" : [ "Наталья", "Анна" ]
+}</code></pre>
+    </section>
+    <section>
+        <h4>Read. Count</h4>
+        <pre><code>db.notes.count({ owner: 'Наталья' }) // 3</code></pre>
+        <pre class="fragment"><code>db.notes.count() // 4</code></pre>
+    </section>
+    <section>
+        <h4>Update</h4>
+        <pre><code class="hljs javascript size-XS">db.collection.update(query, update, options)</code></pre>
+        <a href="https://docs.mongodb.com/manual/reference/operator/update/">Список update операторов</a>
+    </section>
+    <section>
+        <h4>Update. Set</h4>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript size-XS">db.notes.update(
+    { version: { $exists: false }}, // query
+    { $set: { version: 1 }}        // update
+)</code></pre>
+        <pre class="fragment"><code>{ "name" : "Films", "version" : 1 }
+{ "name" : "Books", "version" : 2 }
+{ "name" : "Films for party" }
+{ "name" : "Music" }</code></pre>
+    </section>
+    <section>
+        <h4>Update. Multi</h4>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript size-XS">db.notes.update(
+    { version: { $exists: false }},
+    { $set: { version: 1 }},
+    { multi: true }
+)</code></pre>
+        <pre class="fragment"><code>{ "name" : "Films", "version" : 1 }
+{ "name" : "Books", "version" : 2 }
+{ "name" : "Films for party", "version" : 1 }
+{ "name" : "Music", "version" : 1 }</code></pre>
+    </section>
+    <section>
+        <h4>Update. Increment</h4>
+        <pre style="margin-bottom: 20px;"><code class="hljs javascript">db.notes.update(
+    { name: 'Books' },
+    { $inc: { version: 1 }}
+)</code></pre>
+        <pre class="fragment"><code>{ "name" : "Books", "version" : 3 }</code></pre>
+    </section>
+    <section>
+        <h4>Update. Push</h4>
+        <pre style="margin-bottom: 15px;"><code class="hljs javascript">db.notes.update(
+    { name: 'Films for party' },
+    { $push: { owner: 'Катя' }}
+)</code></pre>
+        <pre class="fragment"><code class="hljs javascript">{
+    "name" : "Films for party",
+    "owner" : [ "Наталья", "Анна", "Катя" ]
+}</code></pre>
+    </section>
+    <section>
+        <h4>Delete</h4>
+        <pre style="margin-bottom: 15px;"><code class="hljs javascript" data-trim>db.collection.remove(query, justOne)</code></pre>
+        <pre style="margin-bottom: 15px;" class="fragment"><code class="hljs javascript">db.notes.remove({})</code></pre>
+        <pre class="fragment"><code class="hljs javascript">db.notes.remove({}, true)</code></pre>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h4>Несколько коллекций</h4>
+        <pre class="fragment" style="margin-bottom: 20px;"><code class="hljs javascript">db.users.insert({
+    name: 'Наталья',
+    notes: ['Films', 'Books', 'Films for party']
+})</code></pre>
+    </section>
+    <section data-transition="fade-in none-out">
+        <h4>Удаление заметки</h4>
+        <pre style="margin-bottom: 20px;"><code class="hljs javascript">db.notes.remove(
+     { name: 'Films', owner: 'Наталья' }
+)</code></pre>
+        <pre><code class="hljs javascript">db.users.update(
+    { name: 'Наталья' },
+    { $pull: { notes: 'Films' }}
+)</code></pre>
+    </section>
+    <section data-transition="none-in fade-out">
+        <h4>Удаление заметки</h4>
+        <pre style="margin-bottom: 20px; background-color: rgba(0,255,0,0.2)"><code class="hljs javascript">db.notes.remove(
+     { name: 'Films', owner: 'Наталья' }
+)</code></pre>
+        <pre style="background-color: rgba(255,0,0,0.2)"><code class="hljs javascript">db.users.update(
+    { name: 'Наталья' },
+    { $pull: { notes: 'Films' }}
+)</code></pre>
+    </section>
+    <section>
+        <h3>Транзакции</h3>
+        <div class="fragment">Их нет.</div>
+        <div class="fragment">Но будут в MongoDB 4.0</div>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h3>Индексы</h3>
+    </section>
+    <section>
+        <pre><code>db.notes.count() // 1 000 004 </code></pre>
+        <pre><code>db.notes.count({ owner: 'Наталья' }) // 3</code></pre>
+    </section>
+    <section>
+        <h4>Индексы. Explain</h4>
+        <pre style="margin-bottom: 15px;"><code class="hljs javascript">db.notes
+    .find({ owner: 'Наталья' })
+    .explain('executionStats')</code></pre>
+        <pre class="fragment"><span>{
+    "nReturned" : 3,
+    <mark>"executionTimeMillis" : 389,</mark>
+    "totalKeysExamined" : 0,
+    <mark>"totalDocsExamined" : 1000004,</mark>
+    "executionStages" : {
+        "stage" : "COLLSCAN",
+        "filter" : {
+            "owner" : { "$eq" : "Наталья" }
+        }
+    }
+}</span></pre>
+    </section>
+    <section>
+        <h3>Создание индекса</h3>
+        <pre><code class="hljs javascript size-XS">db.notes.createIndex({owner: 1})</code></pre>
+    </section>
+    <section>
+        <h3>Поиск по индексу</h3>
+        <pre style="margin-bottom: 15px;"><code class="hljs">db.notes
+    .find({ owner: 'Наталья' })
+    .explain('executionStats')</code></pre>
+        <pre class="fragment"><span>{
+    "nReturned" : 3,
+    <mark>"executionTimeMillis" : 19,</mark>
+    "totalKeysExamined" : 3,
+    <mark>"totalDocsExamined" : 3,</mark>
+    "executionStages" : {
+        "stage" : "FETCH",
+        "inputStage" : {
+            "stage" : "IXSCAN",
+        }
+    }
+}</span></pre>
+    </section>
+    <section>
+        <h3>Уникальный индекс. Создание</h3>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript size-XS">db.users.createIndex({name: 1}, {unique: true})</code></pre>
+        <pre class="fragment"><code class="hljs javascript size-XS">db.users.insert({name: 'Наталья'})</code></pre>
+        <pre class="fragment"><code class="hljs javascript size-XS">WriteResult({ "nInserted" : 1 })</code></pre>
+    </section>
+    <section>
+        <h3>Уникальный индекс</h3>
+        <pre><code class="hljs javascript size-XS">db.users.insert({name: 'Наталья'})</code></pre>
+        <pre class="fragment"><code class="hljs javascript size-XS">WriteResult({
+    "nInserted" : 0,
+    "writeError" : {
+        "code" : 11000,
+        "errmsg" : "E11000 duplicate key
+            error collection:
+            notes-lecture.notes
+            index: name_1 dup key: { : \"Наталья\" }"
+    }
+})</code></pre>
+    </section>
+    <section>
+        <h4>Составной индекс</h4>
+        <pre><code class="hljs javascript size-XS">db.notes.createIndex(
+    {
+        'score.likes': -1,
+        name: 1
+    }
+)</code></pre>
+    </section>
+    <section>
+        <h4>Составной индекс. Сортировки</h4>
+        <pre><code>db.notes
+    .find()
+    .sort({ 'score.likes': -1, name: 1 })
+    .explain()</code></pre>
+        <pre class="fragment" style="margin-top: 20px;"><span>{
+    "inputStage" : {
+        <mark>"stage" : "IXSCAN",</mark>
+        "keyPattern" : {
+            "score.likes" : -1,
+            "name" : 1
+        },
+        <mark>"indexName" : "score.likes_-1_name_1"</mark>
+    }
+}</span></pre>
+    </section>
+    <section>
+        <h4>Составной индекс. Сортировки</h4>
+        <pre><code>db.notes
+    .find()
+    .sort({ 'score.likes': 1, name: 1 })
+    .explain()</code></pre>
+        <pre class="fragment" style="margin-top: 20px;"><span>{
+    "stage" : "SORT",
+    "sortPattern" : {
+        "score.likes" : 1,
+        "name" : 1
+    },
+    "inputStage" : {
+        "stage" : "SORT_KEY_GENERATOR",
+        "inputStage" : {
+            <mark>"stage" : "COLLSCAN",</mark>
+            "direction" : "forward"
+        }
+    }
+}</span></pre>
+    </section>
+    <section>
+        <h4>Просмотр существующих индексов</h4>
+        <pre><code data-trim class="hljs javascript size-XS">db.notes.getIndexes()</code></pre>
+        <pre><code data-trim class="hljs json size-XXS">[
+	{
+		"v" : 2,
+		"key" : { "_id" : 1 },
+		"name" : "_id_",
+		"ns" : "notes-lecture.notes"
+	},
+	{
+		"v" : 2,
+		"key" : { "owner" : 1 },
+		"name" : "owner_1",
+		"ns" : "notes-lecture.notes"
+	}
+]</code></pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Репликация и шардирование</h2>
+    </section>
+    <section>
+        <img src="images/giphy%20(6).gif">
+    </section>
+    <section>
+        <h4>Репликация. Запись и чтение</h4>
+        <img style="background-color: #fff;" src="images/replica-set-1.svg">
+    </section>
+    <section>
+        <h4>Репликация. Проверка состояния системы</h4>
+        <img style="background-color: #fff;" src="images/replica-set-2.svg">
+    </section>
+    <section>
+        <h4>Репликация. Отказ узла</h4>
+        <img style="background-color: #fff;" src="images/replica-set-3.svg">
+    </section>
+    <section data-background='images/cap.png' data-background-size='contain'>
+    </section>
+    <section>
+        <h4>Шардирование</h4>
+        <img style="background-color: #fff;" src="images/Biggest%20Book%20Ever.jpg">
+    </section>
+    <section>
+        <h4>Шардирование</h4>
+        <img style="background-color: #fff;" width="600" src="images/sharded-collection.png">
+    </section>
+    <section>
+        <h4>Шардирование. Range-based</h4>
+        <img style="background-color: #fff;" src="images/sharded-cluster-ranged-distribution-good.bakedsvg.svg">
+    </section>
+    <section>
+        <h4>Шардирование. Hash-based</h4>
+        <img style="background-color: #fff;" height="400" src="images/sharding-hash-based.svg">
+    </section>
+</section>
+
+
+<section>
+    <section>
+        <h2>ODM</h2>
+        <span>Object Document Mapper</span>
+    </section>
+    <section>
+        <h2>Mongoose</h2>
+    </section>
+    <section>
+        <h3>Установка и подключение</h3>
+        <pre style="margin-bottom: 15px;"><code class="hljs bash">npm install mongoose</code></pre>
+        <pre><code data-trim class="hljs javascript">const mongoose = require('mongoose');
+const URI = 'mongodb://localhost/mongo-lecture';
+
+mongoose.connect(URI).then(
+    () => { /** ready to use */ },
+    err => { /** handle initial connection error */ }
+)</code></pre>
+    </section>
+    <section>
+        <h4>Схемы</h4>
+        <pre><code class="hljs javascript">const Schema = mongoose.Schema;
+
+const noteSchema = new Schema({
+    name: { type: String, required: true },
+    text: String,
+    owner: { type: [String], required: true }
+});</code></pre>
+        <a href="http://mongoosejs.com/docs/schematypes.html" class="size-S">Подробнее про схемы</a>
+    </section>
+    <section>
+        <h4>Возможности схем</h4>
+        <pre><code class="hljs javascript">noteSchema.add({
+    version: { type: Number, default: 1 }
+});</code></pre>
+    </section>
+    <section>
+        <h3>Типы данных</h3>
+        <table>
+            <tr>
+                <td>String</td>
+                <td>Number</td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>Buffer</td>
+            </tr>
+            <tr>
+                <td>Boolean</td>
+                <td>Array</td>
+            </tr>
+            <tr>
+                <td>ObjectID</td>
+                <td>Mixed</td>
+            </tr>
+        </table>
+    </section>
+    <section>
+        <h3>Схемы. Индексы</h3>
+        <pre style="margin-bottom: 20px;"><code class="hljs javascript">const userSchema = new Schema({
+    name: {
+        type: String, index: true, unique: true
+    },
+    notes: [String]
+});</code></pre>
+        <pre class="fragment"><code>noteSchema.index({ owner: 1, name: 1 });</code></pre>
+    </section>
+    <section>
+        <h3>Модели</h3>
+        <pre style="margin-bottom: 10px;"><code class="hljs javascript">const Note = mongoose.model('Note', noteSchema);</code></pre>
+<pre class="fragment"><code class="hljs javascript">const films = new Note({
+    name: 'Films',
+    owner: 'Наталья',
+    text: 'My films'
+});</code></pre>
+        <pre class="fragment"><code class="hljs javascript">console.log(films.name); // "Films"
+console.log(films.owner); // ["Наталья"]
+console.log(films.version); // 1
+        </code></pre>
+    </section>
+    <section>
+        <h3>Модели. Виртуальные поля</h3>
+        <pre><code class="hljs javascript">noteSchema.virtual('nameAndVersion').get(function () {
+  return `${this.name}, версия ${this.version}`;
+});</code></pre>
+<pre class="fragment"><code class="hljs javascript">const Note = mongoose.model('Note', noteSchema);
+
+const films = new Note({
+    name: 'Films',
+    owner: 'Наталья'
+});</code></pre>
+        <pre class="fragment"><code class="hljs javascript">console.log(films.nameAndVersion); // Films, версия 1</code></pre>
+    </section>
+    <section>
+        <h2>CRUD</h2>
+    </section>
+    <section>
+        <h3>Create</h3>
+        <pre><code class="hljs javascript">const books = new Note({
+    name: 'Books',
+    owner: 'Наталья'
+});</code></pre>
+        <pre class="fragment"><code class="hljs javascript">books
+  .save()
+  .then(function (savedNote) {console.log('Saved')})
+  .catch(function (err) {console.log('Error:', err)});</code></pre>
+    </section>
+    <section>
+        <h3>Read</h3>
+        <pre><code class="hljs javascript">const query = Note.find({owner: 'Наталья'});</code></pre>
+        <pre style="margin-bottom:15px;" class="fragment"><code class="hljs javascript">query.where({version: {$gte: 2}});
+query.select({name: 1, owner: 1});</code></pre>
+        <pre class="fragment" style="margin-bottom: 10px;"><code>query.exec()
+     .then(note => { console.log('found note': , note) })
+     .catch(err => { console.log('error: ', err) });</code></pre>
+        <pre class="fragment"><code>[ { owner: [ 'Наталья' ],
+    _id: 5ab77159f92855790b23a185,
+    name: 'Books' } ]</code></pre>
+    </section>
+    <section>
+        <h3>Read. Sort, skip, limit</h3>
+        <pre><code class="hljs javascript">Note
+    .find({ version: { $gte: 1 }})
+    .sort({ owner: 1, name: 1 })
+    .skip(1)
+    .limit(20)
+    .select({ owner: 1, name: 1, version: 1 })
+    .exec();</code></pre>
+    </section>
+    <section>
+        <h3>Update</h3>
+        <pre><code class="hljs javascript">note.update({ $inc: { version: 1 }})</code></pre>
+    </section>
+    <section>
+        <h3>Update</h3>
+        <pre><code class="hljs javascript">Note
+    .findById(ObjectId("5ab77143f92855790b23a184"))
+    .then(note => {
+        note.text += ' new text';
+        return note.save();
+    })
+    .then(saved => {
+        console.log('saved successfully!', saved);
+    });</code></pre>
+    </section>
+    <section>
+        <h3>Update</h3>
+        <pre><code class="hljs javascript">Note
+    .update(
+        {},
+        { $inc: { version: 1 }},
+        { multi: true }
+    )
+    .then(() => {console.log('updated'})</code></pre>
+    </section>
+    <section>
+        <h3>Delete</h3>
+        <pre><code class="hljs javascript">Note.remove({name: 'Books'})</code></pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h3>Преимущества MongoDB</h3>
+        <ul>
+            <li class="fragment">Простота</li>
+            <li class="fragment">Работа с большими объемами данных</li>
+            <li class="fragment">Отсутствие схемы - гибкая модель данных</li>
+            <li class="fragment">Скорость разработки</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Ссылки</h2>
+        <ul>
+            <li><a href="http://smira.ru/posts/cap-theorem-in-plain-russian.html">CAP-теорема простым, доступным языком</a></li>
+            <li><a href="https://docs.mongodb.com/manual/">Документация MongoDB 3.6</a></li>
+            <li><a href="http://mongoosejs.com/docs/guide.html">Документация Mongoose</a></li>
+            <li><a href="https://university.mongodb.com/courses/M101JS/about">Курс по MongoDB (на английском языке)</a></li>
+            <li><a href="https://docs.mongodb.com/manual/reference/sql-comparison/">SQL to MongoDB Mapping Chart</a></li>
+        </ul>
+    </section>
+    <section>
+        <h3>Спасибо!</h3>
+        <h4>Вопросы?</h4>
+    </section>
+</section>
+
+
+<script src="../lib/js/head.min.js"></script>
+<script src="../js/reveal.js"></script>
+<script>
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        slideNumber: true,
+        history: true,
+        center: true,
+        hideAddressBar: true,
+        transition: 'slide',
+        dependencies: [
+            {
+                src: '../plugin/highlight/highlight.js',
+                async: true,
+                condition: function () {
+                    return Boolean(document.querySelector('pre code'));
+                },
+                callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
+        ]
+    });
+</script>
+</body>
+</html>
