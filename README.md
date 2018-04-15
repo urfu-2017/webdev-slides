@@ -15,3 +15,4 @@
 ## Хакатоны
 
 1. Первый хакатон ([слайды](http://urfu-2017.github.io/webdev-slides/hackatone-01/index.html))
+1. Второй хакатон ([слайды](http://urfu-2017.github.io/webdev-slides/hackatone-02/index.html))
