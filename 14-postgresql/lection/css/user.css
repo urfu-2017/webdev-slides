@@ -1,0 +1,119 @@
+.reveal pre code
+{
+    max-height: 650px;
+    font-family: 'sourcecodepro-light', textbook-light, Arial;
+    background: rgba(63, 63, 63, 0.6);
+    padding: 10px;
+}
+
+.reveal pre
+{
+    box-shadow: none;
+    font-family: 'sourcecodepro-light', textbook-light, Arial;
+    width: 100%;
+    margin: 0;
+}
+
+.reveal pre.code
+{
+    display: block;
+    padding: 5px;
+    overflow: auto;
+    word-wrap: normal;
+    color: #dcdcdc;
+    background: rgba(63, 63, 63, 0.6);
+}
+
+section.size-L,
+section .size-L,
+pre.size-L
+{
+    font-size: 60px;
+    line-height: 90px;
+}
+
+section.size-M,
+section .size-M,
+pre.size-M,
+.yandex section
+{
+    font-size: 50px;
+    line-height: 75px;
+}
+
+section.size-S,
+section .size-S,
+pre.size-S
+{
+    font-size: 40px;
+    line-height: 60px;
+}
+
+section.size-XS,
+section .size-XS,
+pre.size-XS
+{
+    font-size: 30px;
+    line-height: 45px;
+}
+
+section.size-XXS,
+section .size-XXS,
+pre.size-XXS
+{
+    font-size: 20px;
+    line-height: 30px;
+}
+
+section.size-XXXS,
+section .size-XXXS,
+pre.size-XXXS
+{
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.reveal code
+{
+    font-family: monospace, textbook, Arial;
+}
+
+.author small::first-letter
+{
+    color: red;
+}
+
+.reveal .slide-number {
+    font-size: 1em;
+}
+
+.author {
+    text-align: center;
+}
+
+.author small::first-letter {
+    color: red;
+}
+
+.reveal .font-small {
+    font-size: 0.7em;
+}
+
+.reveal table.center td {
+    text-align: center;
+}
+
+.reveal mark span {
+    color: #000;
+}
+
+.reveal section .join-result {
+    margin: auto;
+    width: 60%;
+}
+
+.reveal div.row {
+    display: inline-block;
+    vertical-align: top;
+    width: 450px;
+}
