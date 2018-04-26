@@ -13,7 +13,7 @@
 1. Паттерны ([видео](https://www.youtube.com/watch?v=A__0VgwlBR0))
 1. ServiceWorker ([слайды](https://yadi.sk/i/P9k4yIvJ3U6Jj3))
 1. PostgreSQL ([слайды](https://urfu-2017.github.io/webdev-slides/14-postgresql/lection/index.html))
-1. Производительный NodeJS ([слайды](https://urfu-2017.github.io/webdev-slides/16-node-pro/#/))
+1. Производительный NodeJS ([слайды](https://urfu-2017.github.io/webdev-slides/16-pro-nodejs/#/))
 1. Storage APIs (Cookies, LocalStorage, IndexedDB) ([слайды](https://urfu-2017.github.io/webdev-slides/19-storage/#/), [pdf](19-storage/index.pdf))
 
 ## Хакатоны
