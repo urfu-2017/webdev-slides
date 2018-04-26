@@ -1,0 +1,11 @@
+.white .no-color,
+.white .no-color *
+{
+    color: black !important;
+}
+
+.black .no-color,
+.black .no-color *
+{
+    color: #fff !important;
+}

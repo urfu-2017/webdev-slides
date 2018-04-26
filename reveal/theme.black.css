@@ -41,7 +41,7 @@
 .black .reveal .slides .green,
 .black .reveal .slides .green *
 {
-    color: #a2fca2;
+    color: #a2fca2 !important;
 }
 
 .black .reveal .slides .magenta,

@@ -51,7 +51,7 @@
 .white .reveal .slides .green,
 .white .reveal .slides .green *
 {
-    color: #63a35c;
+    color: #63a35c !important;
 }
 
 .white .reveal .slides .magenta,
