@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Films</title>
+    <link rel="stylesheet" href="/screen.css">
+</head>
+<body>
+    <main>
+        <aside>
+            <nav>
+                <a href="/films/warcraft" data-id="warcraft">Warcraft</a>
+                <a href="/films/doom" data-id="doom">Doom</a>
+            </nav>
+        </aside>
+        <article></article>
+    </main>
+    <script>
+        const [ article ] = document.getElementsByTagName('article');
+        const [ nav ] = document.getElementsByTagName('nav');
+
+        function onDOMContentLoaded() {
+            const id = window.location.pathname.split('/')[2];
+
+            id && fetchArticle(id).then(data => updateArticle(data));
+        }
+
+        function onNavLinkClick(event) {
+            const id = event.target.dataset.id;
+
+            id && fetchArticle(id).then(data => updateArticle(data));
+
+            return event.preventDefault();
+        }
+
+        function fetchArticle(id) {
+            return fetch(`/api/${id}`)
+                .then(response => response.json())
+        }
+
+        function updateArticle({ title, text }) {
+            window.document.title = title;
+            article.innerHTML = text;
+        }
+
+        nav.addEventListener('click', onNavLinkClick, true);
+        addEventListener('load', onDOMContentLoaded);
+    </script>
+</body>
+</html>

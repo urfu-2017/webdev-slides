@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Films</title>
+    <link rel="stylesheet" href="/screen.css">
+</head>
+<body>
+    <main>
+        <aside>
+            <nav>
+                <a href="/films/warcraft" data-id="warcraft">Warcraft</a>
+                <a href="/films/doom" data-id="doom">Doom</a>
+            </nav>
+            <pre></pre>
+        </aside>
+        <article></article>
+    </main>
+    <script>
+        const [ article ] = document.getElementsByTagName('article');
+        const [ nav ] = document.getElementsByTagName('nav');
+        const [ pre ] = document.getElementsByTagName('pre');
+
+        function onDOMContentLoaded(event) {
+            const href = window.location.pathname;
+            const id = href.split('/')[2];
+
+            id && fetchArticle(id).then(data => {
+                updateArticle(data);
+                history.replaceState(data, data.title, href);
+                log('replaceState', data.title);
+            });
+        }
+
+        function onNavLinkClick(event) {
+            const href = event.target.getAttribute('href');
+            const id = event.target.dataset.id;
+
+            id && fetchArticle(id).then(data => {
+                updateArticle(data);
+                history.pushState(data, data.title, href);
+                log('pushState', data.title);
+            });
+
+            return event.preventDefault();
+        }
+
+        function onPopstate({ state }) {
+            updateArticle(state);
+            log('popstate', state.title);
+        }
+
+        function fetchArticle(id) {
+            return fetch(`/api/${id}`)
+                .then(response => response.json())
+        }
+
+        function updateArticle({ title, text }) {
+            window.document.title = title;
+            article.innerHTML = text;
+        }
+
+        function log(event, title) {
+            const node = document.createTextNode(`${event}: ${title}\n\n`);
+
+            pre.appendChild(node);
+        }
+
+        nav.addEventListener('click', onNavLinkClick, true);
+        addEventListener('load', onDOMContentLoaded);
+        addEventListener('popstate', onPopstate);
+    </script>
+</body>
+</html>

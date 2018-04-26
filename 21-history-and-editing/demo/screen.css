@@ -1,0 +1,47 @@
+body
+{
+    margin: 0;
+    padding: 0;
+
+    font: 1em/1.2 Source Sans Pro, Arial, sans-serif
+}
+
+main
+{
+    display: flex;
+    flex-direction: row;
+}
+
+article
+{
+    flex: 1 1 auto;
+    padding: 20px;
+}
+
+article img
+{
+    float: right;
+}
+
+aside
+{
+    flex: 0 1 auto;
+    padding: 20px;
+}
+
+nav a
+{
+    display: block;
+    padding: 20px;
+    margin: 10px 0;
+    font-size: 2em;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    background: #F3F1ED;
+}
+
+nav a:hover
+{
+    color: red;
+}
