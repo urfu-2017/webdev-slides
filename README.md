@@ -15,7 +15,7 @@
 1. PostgreSQL ([слайды](https://urfu-2017.github.io/webdev-slides/14-postgresql/lection/index.html))
 1. Производительный NodeJS ([слайды](https://urfu-2017.github.io/webdev-slides/16-pro-nodejs/#/))
 1. Storage APIs (Cookies, LocalStorage, IndexedDB) ([слайды](https://urfu-2017.github.io/webdev-slides/19-storage/#/), [pdf](19-storage/index.pdf))
-1. ~~Fun~~ APIs ([слайды](https://urfu-2017.github.io/webdev-slides/19-fun-apis/#/))
+1. ~~Fun~~ APIs ([слайды](https://urfu-2017.github.io/webdev-slides/19-fun-apis/index.html))
 
 ## Хакатоны
 
