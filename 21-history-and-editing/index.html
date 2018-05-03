@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>History and Editing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../reveal/index.min.css">
+    <link rel="stylesheet" href="../reveal/theme.common.css">
+    <link rel="stylesheet" href="../reveal/theme.white.css">
+    <link rel="stylesheet" href="../reveal/theme.black.css">
+    <link rel="stylesheet" href="index.css">
+</head><body class="white"><div class="reveal"><div class="slides">
+
+<section class="center">
+    <p><img src="images/example.png"></p>
+</section>
+
+<section class="center">
+    <p>Асинхронно получить данные</p>
+    <p>Отрендерить часть страницы</p>
+    <p class="fragment green">Обновить адрес ресурса без перезагрузки</p>
+</section>
+
+<section class="center">
+    <h1><a href="https://www.w3.org/TR/html53/browsers.html#session-history-and-navigation">History API</a></h1>
+</section>
+
+<section class="center">
+    <pre class="javascript"><code data-noescape>
+                        history.length;
+
+                        history.back();
+
+                        history.forward();
+
+                        history.go(-2);
+
+                        history.go(2);
+    </code></pre>
+</section>
+
+<section>
+    <h2>pushState</h2>
+    <pre><code data-noescape data-trim>
+history.pushState(state, title, pathname);
+
+history.pushState(null, null, '/films/warcraft');
+    </code></pre>
+</section>
+
+<section>
+    <h2>state</h2>
+    <pre><code data-noescape data-trim>
+const state = { title: 'Warcraft', text: '...' };
+
+history.pushState(state, null, '/films/warcraft');
+
+console.log(history.state);
+// { title: 'Warcraft', text: '...' }
+    </code></pre>
+</section>
+
+<section class="center">
+    <p>Состояние должно быть <span class="green">cериализуемо</span></p>
+</section>
+
+<section class="center">
+    <p>И ограничено размером <span class="grey">(640k в Firefox)</span></p>
+</section>
+
+<section>
+    <h2>popstate</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+const state = { title: 'Warcraft', text: '...' };
+
+history.pushState(state, null, '/films/warcraft');
+
+addEventListener('popstate', event => {
+    console.log(document.location.pathname, event.state);
+});
+
+<span class="fragment">history.back();
+// '/' null</span>
+<span class="fragment">
+history.forward();
+// '/films/warcraft' { title: 'Warcraft', text: '...' }</span>
+    </code></pre>
+</section>
+
+<section>
+    <h2>replaceState</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+const state = { openedTab: 'trailers' };
+
+const pathname = document.location.pathname;
+
+history.replaceState(state, null, pathname);
+    </code></pre>
+</section>
+
+<section>
+    <h2>Поведение скролла</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+history.scrollRestoration = 'manual'; // auto, по умолчанию
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">Manipulating the browser history</a></p>
+    <p><a href="http://diveinto.html5doctor.com/history.html">Manipulating history for fun &amp; profit</a></p>
+</section>
+
+<section class="center">
+    <h1><a href="http://w3c.github.io/editing/">Editing</a></h1>
+</section>
+
+<section class="center">
+    <h2>Selection API</h2>
+</section>
+
+<section class="center">
+    <div>
+        <p id="message">Для орков нет другой жизни кроме войны</p>
+        <p>
+            <button id="select" class="button">Выделить всё</button>
+            <button id="copy" class="button">Скопировать</button>
+        </p>
+        <p id="editor" class="editor" contenteditable></p>
+
+        <script>
+            const message = document.getElementById('message');
+            const select = document.getElementById('select');
+            const copy = document.getElementById('copy');
+            const editor = document.getElementById('editor');
+
+            select.addEventListener('click', () => {
+                window.getSelection().selectAllChildren(message);
+            });
+
+            copy.addEventListener('click', () => {
+                document.execCommand('copy');
+            });
+
+            editor.addEventListener('paste', event => {
+                event.preventDefault();
+
+                const text = event.clipboardData.getData('text/plain');
+
+                document.execCommand('insertHTML', false, text);
+            });
+        </script>
+    </div>
+</section>
+
+<section class="center">
+    <p><img src="images/selection-example.png"></p>
+</section>
+
+<section>
+    <h2>Выделение текста</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+const selection = window.getSelection();
+
+// Выделить текст в domNode и всех вложенных нодах
+selection.selectAllChildren(domNode);
+
+// Вернуть текст
+selection.toString();
+
+// Удалить выделение
+selection.removeAllRanges();
+    </code></pre>
+</section>
+
+<section>
+    <h2>Буфер обмена</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+// Скопировать в буфер
+document.execCommand('copy');
+
+// Событие копирования в буфер
+window.addEventListener('copy', () => {});
+
+// Событие вставки из буфера
+window.addEventListener('paste', event => {
+    event.clipboardData.getData('text/html');
+    event.clipboardData.getData('text/plain');
+});
+    </code></pre>
+</section>
+
+<section>
+    <h2>Поддержка</h2>
+    <a href="http://caniuse.com/#search=clipboard"><img src="images/clipboard-ciu.png"></a>
+    <a class="fragment" href="http://caniuse.com/#search=clipboard"><img src="images/clipboard-restr.png"></a>
+</section>
+
+<section>
+    <h2><a href="https://clipboardjs.com/">Clipboard.js</a></h2>
+    <pre><code class="html" data-noescape>&lt;input id="message"&gt;
+
+&lt;button <span class="blue">data-clipboard-target</span>="#message"&gt;&lt;/button&gt;
+    </code></pre>
+    <pre class="fragment"><code>const clipboard = new Clipboard('button');
+
+clipboard.on('success', event => {
+    const text = event.text;
+
+    event.clearSelection();
+});
+    </code></pre>
+</section>
+
+<section class="center">
+    <h1>execCommand contenteditable spellcheck</h1>
+</section>
+
+<section>
+    <h2>WYSIWYG</h2>
+        <p><button id="bold" class="button wysiwyg-button" style="font-weight: bold">B</button>
+        <button id="italic" class="button wysiwyg-button" style="font-style: italic">I</button>
+        <input id="url" class="wysiwyg-url" value="yandex.ru">
+        <button id="link" class="button">Create link</button></p>
+        <div class="wysiwyg" contenteditable id="wysiwyg" style="height: 300px; ">
+            Веками магия и неприступные стены защищали людей от любых напастей. Но древнее зло, побежденное и забытое тысячелетия назад, пробудилось.
+            В самом сердце королевства открылся темный портал, и раса невиданных существ наводнила земли Азерота. Так начались события, призванные навсегда изменить судьбу этого мира.
+        </div>
+
+        <script>
+            const bold = document.getElementById('bold');
+            const italic = document.getElementById('italic');
+            const link = document.getElementById('link');
+            const wysiwyg = document.getElementById('wysiwyg');
+
+            bold.addEventListener('click', () => {
+                wysiwyg.setAttribute('contentEditable', true);
+                document.execCommand('bold');
+            });
+
+            italic.addEventListener('click', () => {
+                wysiwyg.setAttribute('contentEditable', true);
+                document.execCommand('italic');
+            });
+
+            link.addEventListener('click', () => {
+                const url = document.getElementById('url').value;
+
+                wysiwyg.setAttribute('contentEditable', true);
+                document.execCommand('createLink', false, `https://${url}`);
+            });
+
+            wysiwyg.addEventListener('blur', event => {
+                event.target.setAttribute('contentEditable', false);
+            });
+        </script>
+</section>
+
+<section>
+    <h2>contenteditable</h2>
+    <pre class="html "><code data-noescape>&lt;div <span class="blue">contenteditable</span>&gt;&lt;/div&gt;</code></pre>
+</section>
+
+<section>
+    <h2>spellcheck</h2>
+
+    <pre class="html "><code data-noescape>&lt;div contenteditable spellcheck&gt;&lt;/div&gt;</code></pre>
+
+    <div class="editor fragment" contenteditable spellcheck="true">
+Карова даёт малако!
+    </div>
+</section>
+
+<section>
+    <h2>Поддержка</h2>
+    <p><img src="images/spellcheck-ciu.png"></p>
+</section>
+
+<section>
+    <h2>execCommand</h2>
+    <pre class="javascript"><code data-noescape data-trim>
+document.execCommand('bold')
+
+document.execCommand('createLink', false, 'https://ya.ru/')
+
+document.execCommand('insertHTML', false, '&lt;p&gt;Awesome!&lt;/p&gt;');
+
+document.queryCommandSupported('createLink');
+    </code></pre>
+</section>
+
+<section class="center">
+    <p><a href="https://w3c.github.io/editing/execCommand.html">Спецификация</a></p>
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand">Список команд</a></p>
+    <p><a href="http://codepen.io/netsi1964/pen/QbLLGW">Demo</a></p>
+</section>
+
+</div></div><script src="../reveal/index.min.js"></script></body></html>

@@ -1,0 +1,57 @@
+.button
+{
+    padding: 15px 20px;
+    border: 0;
+    border-radius: 5px;
+    font-size: 18px;
+    color: black;
+    background-color: #ffdb4d;
+    cursor: pointer;
+}
+
+.editor
+{
+    padding-top: 30px;
+    color: grey;
+    outline: none
+}
+
+.wysiwyg
+{
+    padding: 20px;
+    font: 24px/42px Arial !important;
+    line-height: 42px;
+    outline: none;
+}
+
+.wysiwyg b
+{
+    font-weight: bold;
+}
+
+.wysiwyg i
+{
+    font-weight: italic;
+}
+
+.wysiwyg-button
+{
+    width: 55px;
+}
+
+.wysiwyg-url
+{
+    width: 120px;
+    padding: 0 10px;
+    height: 47px;
+    border: #ffdb4d solid 2px;
+    border-radius: 5px;
+    font-size: 18px;
+    outline: none;
+}
+
+.black .wysiwyg-url
+{
+    background: black;
+    color: white;
+}
