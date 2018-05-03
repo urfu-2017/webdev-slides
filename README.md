@@ -17,7 +17,7 @@
 1. Storage APIs (Cookies, LocalStorage, IndexedDB) ([слайды](https://urfu-2017.github.io/webdev-slides/19-storage/#/), [pdf](19-storage/index.pdf))
 1. ~~Fun~~ APIs ([слайды](https://urfu-2017.github.io/webdev-slides/19-fun-apis/index.html))
 1. History and Editing APIs ([слайды](https://urfu-2017.github.io/webdev-slides/21-history-and-editing/#/), [pdf](21-history-and-editing/index.pdf))
-1. Geolocation and File APIs ([слайды](https://urfu-2017.github.io/webdev-slides/21-geolocation-and-file/#/))
+1. Geolocation and File APIs ([слайды](https://urfu-2017.github.io/webdev-slides/21-geolocation-and-file/index.html))
 
 ## Хакатоны
 
