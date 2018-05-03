@@ -1,0 +1,70 @@
+.dnd-example
+{
+    display: flex;
+    justify-content: center;
+}
+
+.dnd-example #drop-zone
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .1s ease-out;
+    height: 250px;
+    width: 250px;
+    background: rgba(0, 0, 0, .05);
+}
+
+.dnd-example #drop-zone div
+{
+    font-size: 20px;
+    text-align: center;
+}
+
+.dnd-example #names
+{
+    box-sizing: border-box;
+    padding: 20px 40px;
+    text-align: left;
+    font-size: 20px;
+    height: 250px;
+    width: 600px;
+    background: rgba(0, 0, 0, .05);
+    margin-left: 10px;
+}
+
+.dnd-example #drop-zone.hovered
+{
+    background: rgba(0, 0, 0, .2);
+}
+
+#parse-csv::-webkit-file-upload-button
+{
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, .2);
+    cursor: pointer;
+}
+
+#parse-csv::-webkit-file-upload-button:active,
+#parse-csv::-webkit-file-upload-button:hover
+{
+    border: 1px solid rgba(0, 0, 0, .4);
+}
+
+#table
+{
+    font-size: 20px;
+}
+
+#table table
+{
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+#table table td
+{
+    border: 1px solid rgba(0, 0, 0, .2);
+}

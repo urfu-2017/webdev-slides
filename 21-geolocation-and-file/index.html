@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>Web APIs</title>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="../reveal/index.min.css">
+        <link rel="stylesheet" href="../reveal/theme.common.css">
+        <link rel="stylesheet" href="../reveal/theme.white.css">
+        <link rel="stylesheet" href="../reveal/theme.black.css">
+        <link rel="stylesheet" href="./index.css">
+        <script src="https://cdn.rawgit.com/pshihn/rough/9be60b1e/dist/rough.min.js"></script>
+    </head>
+    <body class="white">
+        <div class="reveal">
+            <div class="slides">
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Geolocation API</h2>
+                </section>
+
+                <section data-background-image="images/taxi.gif"
+                         data-background-size="contain"></section>
+                <section data-background-image="images/can-i-use-geolocation.png"
+                         data-background-size="contain"></section>
+
+                <section class="center">
+                    <pre style="display: flex; justify-content: center;"><code class="javascript"
+                                                                               data-noescape
+                                                                               data-trim>
+                        navigator.geolocation.getCurrentPosition(
+                            function (position) { ... },
+                            function (error) { ... },
+                            options
+                        );
+
+                        const options = {
+                            enableHighAccuracy: true,
+                            maximumAge: 50000,
+                            timeout: 10000
+                        };
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <pre style="display: flex; justify-content: center;"><code class="javascript"
+                                                                               data-noescape
+                                                                               data-trim>
+                        const watcherId = navigator.geolocation.watchPosition(...);
+
+                        navigator.geolocation.clearWatch(watcherId);
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;"><a
+                            href="https://dev.w3.org/geo/api/spec-source.html#coordinates">Coordinates</a>
+                    </h2>
+                    <pre style="display: flex; justify-content: center;"><code class="bash"
+                                                                               data-trim
+                                                                               data-noescape>
+                        {
+                            coords: {
+                                accuracy: 45,
+                                altitude: null,
+                                altitudeAccuracy: null,
+                                heading: null,
+                                latitude: 56.783005499999994,
+                                longitude: 60.54139849999999,
+                                speed: null
+                            },
+                            timestamp: 1459788138892
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Geolocation API</h2>
+                    <div style="display: flex; justify-content: center; align-items: center; font-size: 40px;">
+                        <ul style="list-style: none">
+                            <li style="display: flex; align-items: center;">GPS - Global Positioning
+                                System
+                            </li>
+                            <li style="display: flex; align-items: center;">Google's Geolocation
+                                Service <span class="grey"
+                                              style="margin-left: 10px; font-size: 30px;">Chrome, Firefox, Opera</span>
+                            </li>
+                            <li style="display: flex; align-items: center;">Microsoft Location
+                                Service <span class="grey"
+                                              style="margin-left: 10px; font-size: 30px;">Internet Explorer, Edge</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">File APIs</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Для чего?</h2>
+                    <div style="display: flex; justify-content: center; align-items: center; font-size: 40px;">
+                        <ul style="list-style: none">
+                            <li class="fragment" style="display: flex; align-items: center;">Доступ
+                                к файлам из файловой системы
+                            </li>
+                            <li class="fragment" style="display: flex; align-items: center;">
+                                Получение контента файла без отправки на сервер
+                            </li>
+                            <li class="fragment" style="display: flex; align-items: center;">Работа
+                                с файлами как с бинарными данными
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="center">
+                    <div style="display: flex; justify-content: center; align-items: center; font-size: 40px;">
+                        <ul style="list-style: none">
+                            <li><strong>Blob</strong>&nbsp;&mdash; file-like объект, позволяет
+                                работать с бинарными данными
+                            </li>
+                            <li class="fragment"><strong>File</strong>&nbsp;&mdash; основан на Blob
+                            </li>
+                            <li class="fragment"><strong>FileList</strong>&nbsp;&mdash; набор
+                                объектов типа File
+                            </li>
+                            <li class="fragment"><strong>FileReader</strong>&nbsp;&mdash; позволяет
+                                осуществлять чтение объектов типа Blob или File и получать доступ к
+                                их контенту
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section data-background-image="images/can-i-use-file-api.png"
+                         data-background-size="contain"></section>
+
+                <section class="center">
+                    <pre style="display: flex; justify-content: center;"><code class="javascript"
+                                                                               data-trim
+                                                                               data-noescape>
+                        if (window.Blob && window.File &&
+                            window.FileList && window.FileReader) {
+                          // File APIs полностью поддерживаются
+                        } else {
+                          // File APIs поддерживаются не полностью
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Blob</h2>
+                    <pre style="display: flex; justify-content: center;"><code class="javascript"
+                                                                               data-trim
+                                                                               data-noescape>
+                        const blobA = new Blob(['abc', 'def'], options);
+                        const blobB = new Blob([blobA, 'abc'], options);
+                        const blobC = new Blob([blobA, blobB], options);
+
+                        const options = {
+                            type: 'plain/text',
+                            endings: 'native' // transparent
+                        };
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Blob</h2>
+                    <pre style="display: flex; justify-content: center;"><code class="javascript"
+                                                                               data-trim
+                                                                               data-noescape>
+                        blob.size // Размер в байтах
+                        blob.type // MIME-type
+
+                        blob.slice(start, end, contentType);
+                        blob.close();
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Blob URLs</h2>
+                    <pre style="display: flex; justify-content: center;"><code class="javascript"
+                                                                               data-trim
+                                                                               data-noescape>
+                        const blob = new Blob(['abc'], { type: 'plain/text' });
+
+                        const url = URL.createObjectURL(blob);
+                        // blob:d3958f5c-0777-0845-9dcf-2cb28783acaf
+
+                        URL.revokeObjectURL(url);
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Пример: Скачивание файла</h2>
+                    <pre style="display: flex; justify-content: center;">
+                        <code class="html" data-trim data-noescape>
+                            &lt;a download="text.txt">Скачать&lt;/a&gt;
+                        </code>
+                    </pre>
+                </section>
+
+                <section data-background-image="images/can-i-use-download-attribute.png"
+                         data-background-size="contain"></section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Пример: Скачивание файла</h2>
+                    <pre style="display: flex; justify-content: center;">
+                        <code class="javascript" data-trim data-noescape>
+                            const link = document.getElementById('link');
+                            const textarea = document.getElementById('textarea');
+
+                            textarea.addEventListener('change', function (event) {
+                                const text = event.target.value;
+                                const blob = new Blob([text], { type: 'plain/text' });
+
+                                link.href = URL.createObjectURL(blob);
+                            });
+                        </code>
+                    </pre>
+                </section>
+
+                <section class="center">
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <textarea id="textarea" style="height: 300px; width: 500px; font-size: 30px; resize: none; outline: none;"></textarea>
+                        <a id="link" download="text.txt" style="cursor: pointer; margin-top: 20px; padding: 5px 15px; color: #000; border: 1px solid rgba(0,0,0,.2); border-radius: 3px; font-weight: bold; font-size: 20px;">Скачать</a>
+                    </div>
+                    <script>
+                        const link = document.getElementById('link');
+                        const textarea = document.getElementById('textarea');
+
+                        textarea.addEventListener('change', function (event) {
+                            const text = event.target.value;
+                            const blob = new Blob([text], { type: 'plain/text' });
+
+                            link.href = window.URL.createObjectURL(blob);
+                        });
+                    </script>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Создание файлов различных форматов</h2>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; font-size: 40px;">Создание файлов различных форматов: <strong>jsPDF</strong></h2>
+                    <pre style="display: flex; justify-content: center;">
+                        <code class="javascript" data-trim data-noescape>
+                            const doc = new jsPDF()
+
+                            doc.text(20, 20, 'Hello world!');
+                            doc.text(20, 30, 'This is client-side Javascript');
+
+                            doc.addPage();
+
+                            doc.text(20, 20, 'Do you like that?');
+                        </code>
+                    </pre>
+                    <br>
+                    <div style="text-align: center; font-size: 30px;"><a href="https://parall.ax/products/jspdf">jsPDF</a></div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold; font-size: 40px;">Создание файлов различных форматов: <strong>jsZip</strong></h2>
+                    <pre style="display: flex; justify-content: center;">
+                        <code class="javascript" data-trim data-noescape>
+                            const zip = new JSZip();
+                            const img = zip.folder('images');
+
+                            zip.file('Hello.txt', 'Hello World\n');
+                            img.file('smile.gif', imgData, { base64: true });
+
+                            zip
+                                .generateAsync({ type: 'blob' })
+                                .then(function(content) {
+                                    // see FileSaver.js
+                                    saveAs(content, 'example.zip');
+                                });
+                        </code>
+                    </pre>
+                    <div style="text-align: center; font-size: 30px;"><a href="https://stuk.github.io/jszip/">jsZip</a></div>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Загрузка файлов</h2>
+                </section>
+
+                <section class="center">
+                    <pre class="html" style="display: flex; justify-content: center;"><code data-trim data-noescape>
+                        &lt;input type="file" multiple /&gt;
+                        &lt;input type="file" multiple accept="application/pdf" /&gt;
+                        &lt;input type="file" multiple accept="image/png,image/jpeg" /&gt;
+                        &lt;input type="file" multiple accept="image/*" /&gt;
+                        &lt;input type="file" multiple accept="video/*" /&gt;
+                        &lt;input type="file" multiple accept="audio/*" /&gt;
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <pre class="javascript" style="display: flex; justify-content: center;"><code data-trim data-noescape>
+                        const input = document.getElementById('input');
+
+                        input.addEventListener('change', function () {
+                            const files = input.files; // FileList
+
+                            files.length;
+                            files[0];
+                            files.item(0);
+                        });
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Drag and Drop</h2>
+                    <pre class="html" style="background-color: rgba(0, 0, 0, .05);"><code style="background: transparent;" data-trim data-noescape>
+                        &lt;div id="drop-zone"&gt;&lt;/div&gt;
+                        &lt;div id="names"&gt;&lt;/div&gt;
+                    </code></pre>
+                    <pre class="javascript"><code data-trim data-noescape>
+                        const dropZone = document.getElementById('drop-zone');
+                        const names = document.getElementById('names');
+
+                        dropZone.addEventListener('dragover', function (event) {
+                            event.preventDefault();
+                            event.dataTransfer.dropEffect = 'copy';
+                        });
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Drag and Drop</h2>
+                    <pre class="javascript"><code data-trim data-noescape>
+                        dropZone.addEventListener('drop', function (event) {
+                            event.preventDefault();
+
+                            const files = event.dataTransfer.files;
+                            const output = [];
+
+                            for (let i = 0; i < files.length; i++) {
+                                output.push('&lt;li&gt;' + files[i].name + '&lt;/li&gt;');
+                            }
+
+                            names.innerHTML = '&lt;ol&gt;' + output.join('') + '&lt;/ol&gt;';
+                        });
+                    </code></pre>
+                    <div style="text-align: center; font-size: 30px;"><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API">Подробнее про Drag and Drop</a></div>
+                </section>
+
+                <section class="center">
+                    <div class="dnd-example">
+                        <div id="drop-zone">
+                            <div id="drop-text">Перетащите файлы</div>
+                        </div>
+                        <div id="names"></div>
+                    </div>
+                    <script>
+                        const dropZone = document.getElementById('drop-zone');
+                        const names = document.getElementById('names');
+
+                        dropZone.addEventListener('dragover', function (event) {
+                            event.preventDefault();
+                            event.dataTransfer.dropEffect = 'copy';
+                            dropZone.classList.add('hovered');
+                        });
+
+                        dropZone.addEventListener('dragleave', function () {
+                            dropZone.classList.remove('hovered');
+                        });
+
+                        dropZone.addEventListener('drop', function (event) {
+                            event.preventDefault();
+                            const files = event.dataTransfer.files;
+                            const output = [];
+                            for (var i = 0; i < files.length; i++) {
+                                output.push('<li>' + files[i].name + '</li>');
+                            }
+                            names.innerHTML = '<ol>' + output.join('') + '</ol>';
+                            dropZone.classList.remove('hovered');
+                        });
+                    </script>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">File</h2>
+                    <pre class="javascript" style="display: flex; justify-content: center;"><code data-trim data-noescape>
+                        {
+                            lastModified: 1461053555000,
+                            lastModifiedDate: 'Date 2016-04-18T09:23:08.000Z',
+                            name: 'img.png',
+                            size: 8057,
+                            type: 'image/png'
+                        }
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Чтение файла</h2>
+                    <pre style="display: flex; justify-content: center;" class="javascript">
+                        <code data-trim data-noescape>
+                            const reader = new FileReader();
+
+                            reader.readAsArrayBuffer(file);
+                            reader.readAsBinaryString(file);
+                            reader.readAsDataURL(file);
+                            reader.readAsText(file);
+                            reader.abort();
+                        </code>
+                    </pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Чтение файла</h2>
+                    <pre class="javascript" style="display: flex; justify-content: center;"><code data-trim data-noescape>
+                        reader.onerror
+                        reader.onloadstart
+                        reader.onloadend  // даже в случаее неудачной загрузки
+                        reader.onload     // только в случае успеха
+                        reader.onprogress
+
+                        reader.error
+                        reader.readyState // EMPTY - 0, LOADING - 1, DONE - 2
+                        reader.result
+                    </code></pre>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Чтение файла</h2>
+                    <pre class="html" style="font-size: 40px; background-color: rgba(0, 0, 0, .05);"><code style="background: transparent;" data-trim data-noescape>
+                        &lt;input type="file" id="input" accept=".csv"/&gt;
+                        &lt;div id="table"&gt;&lt;/div&gt;
+                    </code></pre>
+                    <pre class="javascript" style="font-size: 40px;"><code data-trim data-noescape>
+                        const input = document.getElementById('input');
+                        const table = document.getElementById('table');
+
+                        input.addEventListener('change', function () {
+                            const csv = input.files[0];
+                            const reader = new FileReader();
+
+                            reader.addEventListener('load', function () {
+                                table.innerHTML = csvToHtml(reader.result);
+                            });
+
+                            reader.readAsText(csv);
+                        });
+                    </code></pre>
+                </section>
+
+                <section>
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <input type="file" id="parse-csv" style="cursor: pointer; margin-top: 20px; padding: 5px 15px; color: #000; border-radius: 3px; font-weight: normal; font-size: 20px;" accept=".csv"/>
+                        <div id="table"></div>
+                    </div>
+                    <script>
+                        function csvToHtml(csv) {
+                            const tableContent = csv
+                                .split('\n')
+                                .reduce((tableContent, row) => {
+                                    const rowContent = row
+                                        .split(';')
+                                        .reduce((rowContent, cell) => {
+                                            return `${rowContent}<td>${cell}</td>`;
+                                        }, '');
+
+                                    return `${tableContent}<tr>${rowContent}</tr>`;
+                                }, '');
+
+                            return `<table>${tableContent}</table>`;
+                        }
+
+                        const input = document.getElementById('parse-csv');
+                        const table = document.getElementById('table');
+
+                        input.addEventListener('click', function () {
+                            input.value = null;
+                        });
+
+                        input.addEventListener('change', function () {
+                            const csv = input.files[0];
+                            const reader = new FileReader();
+
+                            reader.addEventListener('load', function () {
+                                table.innerHTML = csvToHtml(reader.result);
+                            });
+
+                            reader.readAsText(csv);
+                        });
+                    </script>
+                </section>
+
+                <section class="center">
+                    <h2 style="font-weight: bold;">Полезные ссылки</h2>
+                    <div style="text-align: center; margin: 20px 0; font-size: 40px;">
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="https://www.w3.org/TR/FileAPI/">File APIs</a><span class="grey"> на w3.org</span><br>
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="https://developer.mozilla.org/ru/docs/Web/API/File/Using_files_from_web_applications">File APIs</a><span class="grey"> на MDN</span><br>
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="https://www.html5rocks.com/ru/tutorials/file/dndfiles/">Чтение файлов в JavaScript с помощью API файлов</a>
+                        <a style="margin: 5px 0; display: inline-block;" target="_blank"
+                           href="https://www.youtube.com/watch?v=xT6eBk_Wr7c&feature=youtu.be">Создание редактора изображений в браузере</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <script src="../reveal/index.min.js"></script>
+
+    </body>
+</html>
